@@ -9,7 +9,6 @@ from recipes.models import (
     Tag,
     ShopList,
     Favourites,
-    Follow,
 )
 
 

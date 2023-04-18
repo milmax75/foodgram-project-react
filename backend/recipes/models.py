@@ -132,26 +132,3 @@ class ShopList(models.Model):
         related_name='shoplist_recipe',
         verbose_name='Recipe'
     )
-
-
-class Follow(models.Model):
-    user = models.ForeignKey(
-        UserCustomized,
-        on_delete=models.CASCADE,
-        related_name='follower',
-        verbose_name='User'
-    )
-    author = models.ForeignKey(
-        UserCustomized,
-        on_delete=models.CASCADE,
-        related_name='following',
-        verbose_name='Post author'
-    )
-
-    class Meta:
-        constraints = (models.UniqueConstraint(fields=('user_id',
-                                                       'author_id'),
-                                               name='unique_following'),)
-
-    def __str__(self):
-        return self.user
