@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-import os
+#import os
 import sys
+
+import os, django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "foodgram.settings")
+django.setup()
 
 
 def main():

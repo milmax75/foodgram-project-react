@@ -6,7 +6,9 @@ from .serializers import (
     IngredientsSerializer,
     TagSerializer,
     FavouritesSerializer,
-    ShopListSerializer
+    ShopListSerializer,
+    CreateUpdateRecipeSerializer,
+    IngredientInRecipeSerializer
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -35,3 +37,22 @@ class FavouritesViewSet(viewsets.ModelViewSet):
 class ShopListViewSet(viewsets.ModelViewSet):
     queryset = ShopList.objects.all()
     serializer_class = ShopListSerializer
+
+
+class RecipeViewSet(viewsets.ModelViewSet):
+    queryset = Recipe.objects.all()
+    serializer_class = CreateUpdateRecipeSerializer
+
+    '''def get_queryset(self):
+        qs = Tag.objects.all().id
+        return qs'''
+
+    '''def get_serializer_class(self):
+        if self.request.method in ('POST', 'PATCH'):
+            return CreateRecipeSerializer'''
+        # return ...
+
+
+class IngredientsInRecipeViewSet(viewsets.ModelViewSet):
+    queryset = Recipe.objects.all()
+    serializer_class = IngredientInRecipeSerializer

@@ -78,24 +78,35 @@ class Recipe(models.Model):
             MinValueValidator(1),
         ))
     image = models.ImageField('Image', upload_to='recipes/', blank=True)
-    ingredient = models.ManyToManyField(
+    ingredients = models.ManyToManyField(
         Ingredients,
-        related_name='ingredient',
+        through='IngredientInRecipe',
+        #through_fields=('recipe', 'ingredient'),
         verbose_name='ingredient'
     )
-    tag = models.ManyToManyField('Tag', related_name='tag', verbose_name='tag')
+    tags = models.ManyToManyField(
+        'Tag',
+        #related_name='recipes',
+        verbose_name='tag'
+    )
     author = models.ForeignKey(
         UserCustomized,
         on_delete=models.SET_NULL,
-        related_name='author',
+        related_name='recipes',
         verbose_name='Author of the recipe',
         blank=True,
         null=True
     )
-    quantity = models.IntegerField(verbose_name='Quantity', validators=(
-            MinValueValidator(1),
-        ))
+
     # pub_date = models.DateTimeField('Дата создания', auto_now_add=True)
+
+
+class IngredientInRecipe(models.Model):
+    quantity = models.IntegerField(verbose_name='Quantity', validators=(
+            MinValueValidator(1, "Добавьте хоть 1 ингредиент"),
+        ))
+    ingredient = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
 
 class Tag(models.Model):
