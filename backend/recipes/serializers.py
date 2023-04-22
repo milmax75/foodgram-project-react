@@ -1,5 +1,5 @@
 import base64  # Модуль с функциями кодирования и декодирования base64
-from django.db import models
+from django.db.models import F
 from django.core.files.base import ContentFile
 from rest_framework import serializers
 # from rest_framework.generics import get_object_or_404
@@ -30,16 +30,29 @@ class IngredientsSerializer(serializers.ModelSerializer):
 
 
 class IngredientInRecipeSerializer(serializers.ModelSerializer):
-    recipe = serializers.PrimaryKeyRelatedField(read_only=True)
+    recipe_id = serializers.PrimaryKeyRelatedField(read_only=True)
     id = serializers.PrimaryKeyRelatedField(
-        source='ingredient',
+        source='ingredients',
         queryset=Ingredients.objects.all()
     )
     quantity = serializers.IntegerField(write_only=True, min_value=1)
 
     class Meta:
         model = IngredientInRecipe
-        fields = ('quantity', 'recipe', 'id')
+        fields = ('quantity', 'recipe_id', 'id')
+
+
+class IngredientCreateInRecipeSerializer(serializers.ModelSerializer):
+    recipe = serializers.PrimaryKeyRelatedField(read_only=True)
+    id = serializers.PrimaryKeyRelatedField(
+        source='ingredients',
+        queryset=Ingredients.objects.all()
+    )
+    quantity = serializers.IntegerField(write_only=True, min_value=1)
+
+    class Meta:
+        model = IngredientInRecipe
+        fields = ('recipe', 'id', 'quantity')
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -54,13 +67,22 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Tag.objects.all()
     )
-    ingredients = IngredientInRecipeSerializer(many=True)
+    ingredients = serializers.SerializerMethodField() #IngredientCreateInRecipeSerializer(many=True)
 
     class Meta:
         model = Recipe
         fields = ('ingredients', 'tags', 'image', 'name',
                   'description', 'cooktime')
 
+    def get_ingredients(self, obj):
+        """Получение ингредиентов."""
+        return obj.ingredients.values(
+            "id",
+            "name",
+            "measurement_unit",
+            amount=F("ingredients_amount__amount"),
+        )
+    
     def validate_ingredients(self, value):
         if len(value) < 1:
             raise serializers.ValidationError(
@@ -70,15 +92,16 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         tags = validated_data.pop('tags')
+        ingredients = validate_data["ingredients"]
         ingredients = validated_data.pop('ingredients')
         recipe = Recipe.objects.create(**validated_data)
         for tag in tags:
             recipe.tags.add(tag)
         create_ingredients = [
             IngredientInRecipe(
-                quantity=ingredient['quantity'],
+                recipe=recipe,
                 ingredient_id=ingredient['id'],
-                recipe=recipe
+                quantity=ingredient['quantity']
             )
             for ingredient in ingredients
         ]

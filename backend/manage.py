@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
-#import os
+import os
 import sys
 
-import os, django
+'''import os, django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "foodgram.settings")
-django.setup()
+django.setup()'''
 
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'foodgram.settings')
+    #django.setup()
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

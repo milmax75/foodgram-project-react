@@ -16,16 +16,18 @@ class TagsAdmin(admin.ModelAdmin):
     list_editable = ("name", "slug", "color")
 
 
-class TagInLine(admin.TabularInline):
+'''class TagInLine(admin.TabularInline):
     model = Recipe.tags.through
-    readonly_fields = ('id', )
-    extra = 1
+    #readonly_fields = ('tag', 'tag_name')
+    extra = 2
+    min_num = 1'''
 
 
 class IngredientInLine(admin.TabularInline):
     model = Recipe.ingredients.through
-    readonly_fields = ('id', )
-    extra = 1
+    readonly_fields = ('recipe', 'id')
+    extra = 2
+    min_num = 1
 
 
 @admin.register(Recipe)
@@ -35,4 +37,4 @@ class RecipesAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description', 'cooktime', 'author')
     list_editable = ('name', 'description', 'cooktime')
     search_fields = ('name',)
-    inlines = [IngredientInLine, TagInLine]
+    inlines = [IngredientInLine]
