@@ -67,22 +67,14 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Tag.objects.all()
     )
-    ingredients = serializers.SerializerMethodField() #IngredientCreateInRecipeSerializer(many=True)
+    ingredients = IngredientCreateInRecipeSerializer(many=True)
+    print(ingredients.data)
 
     class Meta:
         model = Recipe
         fields = ('ingredients', 'tags', 'image', 'name',
                   'description', 'cooktime')
 
-    def get_ingredients(self, obj):
-        """Получение ингредиентов."""
-        return obj.ingredients.values(
-            "id",
-            "name",
-            "measurement_unit",
-            amount=F("ingredients_amount__amount"),
-        )
-    
     def validate_ingredients(self, value):
         if len(value) < 1:
             raise serializers.ValidationError(
@@ -92,7 +84,6 @@ class CreateUpdateRecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         tags = validated_data.pop('tags')
-        ingredients = validate_data["ingredients"]
         ingredients = validated_data.pop('ingredients')
         recipe = Recipe.objects.create(**validated_data)
         for tag in tags:

@@ -25,7 +25,7 @@ class TagsAdmin(admin.ModelAdmin):
 
 class IngredientInLine(admin.TabularInline):
     model = Recipe.ingredients.through
-    readonly_fields = ('recipe', 'id')
+    readonly_fields = ('ingredient_id', 'id')
     extra = 2
     min_num = 1
 

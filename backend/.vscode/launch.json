@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "python": "$/home/max/yandex_dev/foodgram-project-react/venv/lib/python3.10",
+            "program": "$/home/max/yandex_dev/foodgram-project-react/backend/manage.py",
+            "args": [
+                "runserver",
+                "--noreload"
+            ],
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput",
+                "DjangoDebugging"
+            ]
+        },
+    ]
+}

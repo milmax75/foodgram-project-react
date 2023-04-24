@@ -7,47 +7,47 @@ from rest_framework.filters import SearchFilter
 
 
 class IngredientsFilter(SearchFilter):
-    '''Фильтр обьектов Ingredients.'''
+    '''Ingredients objects filter.'''
     search_param = 'name'
 
 
-class TagsMultipleChoiceField(MultipleChoiceField):
-    '''Фильтр обьектов Tags.'''
+class TagsMultiChoiceField(MultipleChoiceField):
+    '''Field class for Tags Filter'''
 
     def validate(self, value):
         if self.required and not value:
             raise ValidationError(
                 self.error_messages['required'], code='required'
             )
-        for val in value:
-            if val in self.choices and not self.valid_value(val):
+        for v in value:
+            if v in self.choices and not self.valid_value(v):
                 raise ValidationError(
                     self.error_messages['invalid_choice'],
                     code='invalid_choice',
-                    params={'value': val},
+                    params={'value': v},
                 )
 
 
 class TagsFilter(filters.AllValuesMultipleFilter):
-    '''Фильтр обьектов Tags.'''
+    '''Tags objects filter.'''
 
-    field_class = TagsMultipleChoiceField
+    field_class = TagsMultiChoiceField
 
 
 class RecipesFilter(FilterSet):
-    '''Фильтр обьектов Recipes.'''
+    '''Recipes objects filter.'''
 
+    tags = TagsFilter(field_name='tags__slug', label='Slug')
     author = filters.AllValuesMultipleFilter(
         field_name='author__id', label='Author'
     )
-    tags = TagsFilter(field_name='tags__slug')
-    is_in_shopping_cart = filters.BooleanFilter(
-        widget=BooleanWidget(), label='In shopping cart'
+    is_in_shop_cart = filters.BooleanFilter(
+        widget=BooleanWidget(), label='In shop cart'
     )
-    is_favorited = filters.BooleanFilter(
-        widget=BooleanWidget(), label='In favourite'
+    is_in_favs = filters.BooleanFilter(
+        widget=BooleanWidget(), label='In favorit'
     )
 
     class Meta:
         model = Recipe
-        fields = ('author', 'tags', 'is_in_shopping_cart', 'is_favorited')
+        fields = ('tags', 'author', 'is_in_shop_cart', 'is_in_favs')

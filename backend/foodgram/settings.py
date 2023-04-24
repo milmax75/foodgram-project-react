@@ -42,13 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'users.apps.UsersConfig',
-    'core.apps.CoreConfig',
-    'recipes.apps.RecipesConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
     'django_filters',
+    'users.apps.UsersConfig',
+    'core.apps.CoreConfig',
+    'recipes.apps.RecipesConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +66,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # ?????????
+    'http://127.0.0.1:3000',  # ?????????
 ] 
 
 ROOT_URLCONF = 'foodgram.urls'
@@ -156,17 +156,17 @@ REST_FRAMEWORK = {
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ],
 
-    # Изменили токен, вместо JWT подключили auth_token:
+    # Switch to JWT auth_token:
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
 
-#    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#    'PAGE_SIZE': 6,
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.StandardResultsSetPagination',
+    # 'PAGE_SIZE': 6,
 }
 
 DJOSER = {
