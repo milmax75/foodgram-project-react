@@ -133,3 +133,6 @@ dmypy.json
 
 #media
 media/
+
+# my different tries
+_backend/

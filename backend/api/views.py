@@ -1,7 +1,4 @@
 
-from http import HTTPStatus
-from django.contrib.auth import get_user_model
-from django.db import transaction
 from django.db.models import BooleanField, Exists, OuterRef, Sum, Value
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
@@ -13,9 +10,6 @@ from recipes.models import (
     ShopList,
     Tag,
 )
-
-from django.template.loader import get_template
-import pdfkit
 from django.http import HttpResponse
 from users.models import Follow, UserCustomized
 from rest_framework import status, viewsets
@@ -45,16 +39,6 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TagsSerializer
     permission_classes = (IsAdminOrReadOnly,)
     pagination_class = None
-
-
-class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
-    '''Ingredients' viewset. Ingredients Model. '''
-
-    queryset = Ingredients.objects.all()
-    serializer_class = IngredientsSerializer
-    filter_backends = [IngredientsFilter]
-    search_fields = ['^name']
-    permission_classes = (IsAdminOrReadOnly,)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -90,43 +74,15 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 is_in_shopcart=Value(False, output_field=BooleanField()),
             )
 
-    @transaction.atomic()
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
     @action(
-        detail=True, methods=['POST'], permission_classes=(IsAuthenticated,)
-    )
-    def favorite(self, request, pk=None):
-        '''Add to favourites.'''
-        data = {
-            'user': request.user.id,
-            'recipe': pk,
-        }
-        serializer = CheckFavouriteSerializer(
-            data=data, context={'request': request}
-        )
-        serializer.is_valid(raise_exception=True)
-        return self.add_object(Favourites, request.user, pk)
-
-    @favorite.mapping.delete
-    def del_favorite(self, request, pk=None):
-        '''Delete from favourites.'''
-        data = {
-            'user': request.user.id,
-            'recipe': pk,
-        }
-        serializer = CheckFavouriteSerializer(
-            data=data, context={'request': request}
-        )
-        serializer.is_valid(raise_exception=True)
-        return self.delete_object(Favourites, request.user, pk)
-
-    @action(
-        detail=True, methods=['POST'], permission_classes=(IsAuthenticated,)
+        detail=True, methods=('POST', 'DELETE'),
+        permission_classes=(IsAuthenticated,)
     )
     def shopping_cart(self, request, pk=None):
-        '''Add to the shoplist.'''
+        '''Add/Delete a recipe to/from the shoplist.'''
         data = {
             'user': request.user.id,
             'recipe': pk,
@@ -135,19 +91,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
             data=data, context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
-        return self.add_object(ShopList, request.user, pk)
-
-    @shopping_cart.mapping.delete
-    def del_shopping_cart(self, request, pk=None):
-        '''Delete from the shoplist.'''
-        data = {
-            'user': request.user.id,
-            'recipe': pk,
-        }
-        serializer = CheckShopCartSerializer(
-            data=data, context={'request': request}
-        )
-        serializer.is_valid(raise_exception=True)
+        if request.method == "POST":
+            return self.add_object(ShopList, request.user, pk)
         return self.delete_object(ShopList, request.user, pk)
 
     def add_object(self, model, user, pk):
@@ -163,41 +108,62 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(
-        methods=['GET'], detail=False, permission_classes=(IsAuthenticated,)
+        methods=('GET',), detail=False, permission_classes=(IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
         '''Download shoplist file in pdf format'''
         ingredients = (
-            IngredientInRecipe.objects.filter(recipe__list__user=request.user)
-            .values('ingredients__name', 'ingredients__units')
-            .order_by('ingredients__name')
+            IngredientInRecipe.objects.filter(
+                recipe__shoplist_recipe__user=request.user
+            )
+            .values('ingredient__name', 'ingredient__units')
+            .order_by('ingredient__name')
             .annotate(total=Sum('quantity'))
         )
-        output = 'The list of goods for your recipes. \n'
-        output += '\n'.join(
-                f'{ingredients["ingredients__name"]} - {ingredients["total"]}/'
-                f'{ingredients["ingredients__units"]}'
+        output = 'The list of goods for your recipes. \n\n'
+        output += '+-----------------------------------------+\n'
+        output += '\n|______________________|_______|__________|\n'.join(
+                f'|{ingredient["ingredient__name"]}'
+                f'{(22-len(ingredient["ingredient__name"]))*" "}|'
+                f' {ingredient["total"]}'
+                f'{(6-len(str(ingredient["total"])))*" "}|'
+                f' {ingredient["ingredient__units"]}'
+                f'{(9-len(str(ingredient["ingredient__units"])))*" "}|'
                 for ingredient in ingredients
             )
-
-        template = get_template('testapp/test.html')
-        html = template.render(output)
-        pdf = pdfkit.from_string(html, False)
-
-        filename = 'shopcart.pdf'
-
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+        output += '\n+-----------------------------------------+'
+        filename = 'shoplist.txt'
+        response = HttpResponse(output, content_type="text/plain")
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
+
+    @action(
+        detail=True, methods=('POST', 'DELETE'),
+        permission_classes=(IsAuthenticated,)
+    )
+    def favorite(self, request, pk=None):
+        '''Add/Delete a recipe to/from favourites.'''
+        data = {
+            'user': request.user.id,
+            'recipe': pk,
+        }
+        serializer = CheckFavouriteSerializer(
+            data=data, context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
+        if request.method == "POST":
+            return self.add_object(Favourites, request.user, pk)
+        return self.delete_object(Favourites, request.user, pk)
 
 
 class FollowViewSet(UserViewSet):
     '''Subscriptions viewset includes all actions.'''
 
     @action(
-        methods=('POST',), detail=True, permission_classes=(IsAuthenticated,)
+        methods=('POST', 'DELETE'),
+        detail=True, permission_classes=(IsAuthenticated,)
     )
-    def follow(self, request, id=None):
+    def subscribe(self, request, id=None):
         '''Follow the author.'''
         user = request.user
         author = get_object_or_404(UserCustomized, pk=id)
@@ -210,24 +176,10 @@ class FollowViewSet(UserViewSet):
             context={'request': request},
         )
         serializer.is_valid(raise_exception=True)
-        result = Follow.objects.create(user=user, author=author)
-        serializer = FollowSerializer(result, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # @follow.mapping.delete
-    def unfollow(self, request, id=None):
-        '''Unsubscribe'''
-        user = request.user
-        author = get_object_or_404(UserCustomized, pk=id)
-        data = {
-            'user': user.id,
-            'author': author.id,
-        }
-        serializer = CheckFollowSerializer(
-            data=data,
-            context={'request': request},
-        )
-        serializer.is_valid(raise_exception=True)
+        if request.method == "POST":
+            result = Follow.objects.create(user=user, author=author)
+            serializer = FollowSerializer(result, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         user.follower.filter(author=author).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -241,3 +193,13 @@ class FollowViewSet(UserViewSet):
             pages, many=True, context={'request': request}
         )
         return self.get_paginated_response(self, serializer.data)
+
+
+class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
+    '''Ingredients' viewset. Ingredients Model. '''
+
+    queryset = Ingredients.objects.all()
+    serializer_class = IngredientsSerializer
+    filter_backends = [IngredientsFilter]
+    search_fields = ['^name']
+    permission_classes = (IsAdminOrReadOnly,)

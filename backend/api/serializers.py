@@ -2,8 +2,6 @@ from django.core.files.base import ContentFile
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 from users.models import UserCustomized, Follow
-from users.validators import validate_username
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from djoser.serializers import UserSerializer, UserCreateSerializer
 from django.db.models import F
 from recipes.models import (
@@ -14,7 +12,6 @@ from recipes.models import (
     ShopList,
     Favourites
 )
-from rest_framework.validators import UniqueValidator
 import base64
 
 
@@ -85,7 +82,7 @@ class PostUserSerializer(UserCreateSerializer):
 
 
 class GetUserSerializer(serializers.ModelSerializer):
-    '''User info retrievement'''
+    '''User information retrievement'''
     is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
@@ -135,8 +132,8 @@ class GetRecipeSerializer(GetIngredientsMixin, serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            'id', 'name', 'description', 'cooktime',
-            'image', 'ingredients', 'tag', 'author'
+            'id', 'name', 'description', 'cooktime', 'image', 'ingredients',
+            'tags', 'author', 'is_favorited', 'is_in_shopping_cart'
         )
 
 
@@ -153,7 +150,7 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
         model = Recipe
         fields = (
             'id', 'name', 'description', 'cooktime',
-            'image', 'ingredients', 'tag', 'author'
+            'image', 'ingredients', 'tags', 'author'
         )
         read_only_fields = ('author',)
 
@@ -215,7 +212,7 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
         instance.tags.clear()
         ingredients = validated_data.pop('ingredients')
         tags = validated_data.pop('tags')
-        instance = self.add_ingredients_and_tags(
+        instance = self.ingreds_and_tags_add(
             instance, ingredients=ingredients, tags=tags
         )
         return super().update(instance, validated_data)
@@ -318,7 +315,7 @@ class CheckFavouriteSerializer(serializers.ModelSerializer):
         '''Add to favourites validation.'''
         user = self.context['request'].user
         recipe = obj['recipe']
-        favorite = user.favourites.filter(recipe=recipe).exists()
+        favorite = user.fav_adder.filter(recipe=recipe).exists()
 
         if self.context['request'].method == 'POST' and favorite:
             raise serializers.ValidationError(
@@ -347,7 +344,7 @@ class CheckShopCartSerializer(serializers.ModelSerializer):
         '''Adding a recipe into shopcart validation'''
         user = self.context['request'].user
         recipe = obj['recipe']
-        shop_list = user.list.filter(recipe=recipe).exists()
+        shop_list = user.shopper.filter(recipe=recipe).exists()
 
         if self.context['request'].method == 'POST' and shop_list:
             raise serializers.ValidationError(

@@ -12,7 +12,7 @@ class IngredientsFilter(SearchFilter):
 
 
 class TagsMultiChoiceField(MultipleChoiceField):
-    '''Field class for Tags Filter'''
+    '''Validation as field class for Tags Filter'''
 
     def validate(self, value):
         if self.required and not value:
