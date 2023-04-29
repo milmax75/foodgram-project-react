@@ -105,7 +105,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         methods=('GET',), detail=False, permission_classes=(IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
-        '''Download shoplist file in pdf format'''
+        '''Download shoplist file in txt format'''
         ingredients = (
             IngredientInRecipe.objects.filter(
                 recipe__shoplist_recipe__user=request.user
