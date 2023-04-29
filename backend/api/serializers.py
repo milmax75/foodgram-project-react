@@ -15,15 +15,6 @@ from recipes.models import (
 import base64
 
 
-class GetIsSubscribedMixin:
-    '''User follow Mixin'''
-    def get_is_subscribed(self, obj):
-        user = self.context['request'].user
-        if user.is_anonymous:
-            return False
-        return user.follower.filter(author=obj.id).exists()
-
-
 class GetIngredientsMixin:
     '''Recipe's Mixin.'''
 
@@ -32,8 +23,8 @@ class GetIngredientsMixin:
         return obj.ingredients.values(
             'id',
             'name',
-            'units',
-            quantity=F('ingredientinrecipe__quantity'),
+            'measurement_unit',
+            amount=F('ingredientinrecipe__amount'),
         )
 
 
@@ -117,7 +108,7 @@ class IngredientsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ingredients
-        fields = 'id', 'name', 'units'
+        fields = 'id', 'name', 'measurement_unit'
 
 
 class GetRecipeSerializer(GetIngredientsMixin, serializers.ModelSerializer):
@@ -132,7 +123,7 @@ class GetRecipeSerializer(GetIngredientsMixin, serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            'id', 'name', 'description', 'cooktime', 'image', 'ingredients',
+            'id', 'name', 'text', 'cooking_time', 'image', 'ingredients',
             'tags', 'author', 'is_favorited', 'is_in_shopping_cart'
         )
 
@@ -149,7 +140,7 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
     class Meta:
         model = Recipe
         fields = (
-            'id', 'name', 'description', 'cooktime',
+            'id', 'name', 'text', 'cooking_time',
             'image', 'ingredients', 'tags', 'author'
         )
         read_only_fields = ('author',)
@@ -168,17 +159,11 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
                 raise serializers.ValidationError(
                     'Ingredient must be unique.'
                 )
-            if int(item['quantity']) < 1:
+            if int(item['amount']) < 1:
                 raise serializers.ValidationError('Minimum quantity is 1 unit')
             ingredient_list.append(ingredient)
         data['ingredients'] = ingredients
         return data
-
-    def validate_cooking_time(self, time):
-        '''Cooking time validation.'''
-        if int(time) < 1:
-            raise serializers.ValidationError('Minimum time is 1 minute')
-        return time
 
     def ingreds_and_tags_add(self, instance, **validate_data):
         '''Ingredient tags adding.'''
@@ -192,7 +177,7 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
                 IngredientInRecipe(
                     recipe=instance,
                     ingredient_id=ingredient['id'],
-                    quantity=ingredient['quantity'],
+                    amount=ingredient['amount'],
                 )
                 for ingredient in ingredients
             ]
@@ -223,11 +208,11 @@ class AddRecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('id', 'name', 'cooktime', 'image')
-        read_only_fields = ('id', 'name', 'cooktime', 'image')
+        fields = ('id', 'name', 'cooking_time', 'image')
+        read_only_fields = ('id', 'name', 'cooking_time', 'image')
 
 
-class FollowSerializer(GetIsSubscribedMixin, serializers.ModelSerializer):
+class FollowSerializer(serializers.ModelSerializer):
     '''Follow objects serialization'''
 
     id = serializers.ReadOnlyField(source='author.id')
@@ -264,6 +249,12 @@ class FollowSerializer(GetIsSubscribedMixin, serializers.ModelSerializer):
     def get_recipes_count(self, obj):
         return obj.author.recipes.all().count()
 
+    def get_is_subscribed(self, obj):
+        user = self.context['request'].user
+        if user.is_anonymous:
+            return False
+        return user.follower.filter(author=obj.id).exists()
+
 
 class CheckFollowSerializer(serializers.ModelSerializer):
     '''Validation of the following process.'''
@@ -285,7 +276,7 @@ class CheckFollowSerializer(serializers.ModelSerializer):
                 )
             if subscribed:
                 raise serializers.ValidationError(
-                    'You have alredy unfollowed this author'
+                    'You have alredy followed this author'
                 )
         if self.context['request'].method == 'DELETE':
             if user == author:

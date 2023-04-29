@@ -1,4 +1,3 @@
-
 from django.db.models import BooleanField, Exists, OuterRef, Sum, Value
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
@@ -30,6 +29,7 @@ from .serializers import (
     CheckFavouriteSerializer,
     CheckShopCartSerializer
 )
+from core.pagination import StandardResultsSetPagination
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -54,25 +54,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return CreateUpdateRecipeSerializer
 
     def get_queryset(self):
-        '''Retrieving objects for shoplist and favs'''
-        if self.request.user.is_authenticated:
+        '''Check if recipe in shoplist and/or favs'''
+        user = self.request.user
+        if user.is_authenticated:
             return Recipe.objects.annotate(
                 is_favorited=Exists(
-                    Favourites.objects.filter(
-                        user=self.request.user, recipe__pk=OuterRef('pk')
-                    )
-                ),
-                is_in_shopcart=Exists(
-                    ShopList.objects.filter(
-                        user=self.request.user, recipe__pk=OuterRef('pk')
-                    )
-                ),
+                    user.fav_adder.filter(recipe__pk=OuterRef('pk'))),
+                is_in_shopping_cart=Exists(
+                    user.shopper.filter(recipe__pk=OuterRef('pk')))
             )
-        else:
-            return Recipe.objects.annotate(
-                is_favorited=Value(False, output_field=BooleanField()),
-                is_in_shopcart=Value(False, output_field=BooleanField()),
-            )
+        return Recipe.objects.annotate(
+            is_favorited=Value(False, output_field=BooleanField()),
+            is_in_shopping_cart=Value(False, output_field=BooleanField()),
+        )
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -116,22 +110,32 @@ class RecipeViewSet(viewsets.ModelViewSet):
             IngredientInRecipe.objects.filter(
                 recipe__shoplist_recipe__user=request.user
             )
-            .values('ingredient__name', 'ingredient__units')
+            .select_related('ingredient').all()
+            .prefetch_related('recipe').all()
+            .values('ingredient__name', 'ingredient__measurement_unit')
             .order_by('ingredient__name')
-            .annotate(total=Sum('quantity'))
+            .annotate(total=Sum('amount'))
         )
+        col1 = max(len(ingredient["ingredient__name"])
+                   for ingredient in ingredients)
+        col2 = max(len(str(ingredient["total"]))
+                   for ingredient in ingredients)
+        col3 = max(len(ingredient["ingredient__measurement_unit"])
+                   for ingredient in ingredients)
+        devider = (
+            f'\n|{"_"*(col1+2)}|{"_"*(col2+2)}|{"_"*(col3+2)}|\n')
         output = 'The list of goods for your recipes. \n\n'
-        output += '+-----------------------------------------+\n'
-        output += '\n|______________________|_______|__________|\n'.join(
-                f'|{ingredient["ingredient__name"]}'
-                f'{(22-len(ingredient["ingredient__name"]))*" "}|'
-                f' {ingredient["total"]}'
-                f'{(6-len(str(ingredient["total"])))*" "}|'
-                f' {ingredient["ingredient__units"]}'
-                f'{(9-len(str(ingredient["ingredient__units"])))*" "}|'
-                for ingredient in ingredients
-            )
-        output += '\n+-----------------------------------------+'
+        output += f',{(len(devider)-devider.count("|"))*"_"},\n'
+        output += devider.join(
+            f'| {ingredient["ingredient__name"]} '
+            f'{(col1-len(ingredient["ingredient__name"]))*" "}'
+            f'| {ingredient["total"]}'
+            f'{(col2-len(str(ingredient["total"])))*" "} '
+            f'| {ingredient["ingredient__measurement_unit"]}'
+            f'{(col3-len(ingredient["ingredient__measurement_unit"]))*" "} |'
+            for ingredient in ingredients
+        )
+        output += devider
         filename = 'shoplist.txt'
         response = HttpResponse(output, content_type="text/plain")
         response['Content-Disposition'] = f'attachment; filename={filename}'
@@ -158,11 +162,22 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(UserViewSet):
     '''Subscriptions viewset includes all actions.'''
+    permission_classes = (IsAuthenticated,)
+    pagination_class = StandardResultsSetPagination
+
+    @action(methods=('GET',), detail=False)
+    def subscriptions(self, request):
+        user = request.user
+        queryset = user.follower.all()
+        page = self.paginate_queryset(queryset)
+        serializer = FollowSerializer(page,
+                                      context={'request': request},
+                                      many=True)
+        return self.get_paginated_response(serializer.data)
 
     @action(
         methods=('POST', 'DELETE'),
-        detail=True, permission_classes=(IsAuthenticated,)
-    )
+        detail=True)
     def subscribe(self, request, id=None):
         '''Follow the author.'''
         user = request.user
@@ -182,17 +197,6 @@ class FollowViewSet(UserViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         user.follower.filter(author=author).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @action(detail=False, permission_classes=(IsAuthenticated,))
-    def subscriptions(self, request):
-        '''Subscribtions.'''
-        user = request.user
-        queryset = user.follower.all()
-        pages = self.paginate_queryset(self, queryset, request, view=None)
-        serializer = FollowSerializer(
-            pages, many=True, context={'request': request}
-        )
-        return self.get_paginated_response(self, serializer.data)
 
 
 class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):

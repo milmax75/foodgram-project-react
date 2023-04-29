@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models import Q, F
 from .validators import validate_username
 
 
@@ -42,8 +43,13 @@ class Follow(models.Model):
     )
 
     class Meta:
-        constraints = (models.UniqueConstraint(fields=('user_id', 'author_id'),
-                                               name='unique_following'),)
+        '''Prohibition to create multiple identical subscriptions.
+           Prohibition to subscribe to yourself.'''
+        constraints = (
+            models.UniqueConstraint(fields=('user_id', 'author_id'),
+                                    name='unique_following'),
+            models.CheckConstraint(check=~Q(user=F('author')), name='no_selfy')
+        )
 
     def __str__(self):
         return self.user

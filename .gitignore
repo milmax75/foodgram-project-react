@@ -131,8 +131,11 @@ dmypy.json
 # .idea
 .idea
 
-#media
-media/
+# media
+backend/media/
 
 # my different tries
 _backend/
+
+# vscode
+backend/.vscode/

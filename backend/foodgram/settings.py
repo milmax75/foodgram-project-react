@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_PAGINATION_CLASS': 'core.pagination.StandardResultsSetPagination',
-    # 'PAGE_SIZE': 6,
+    'PAGE_SIZE': 6,
 }
 
 DJOSER = {

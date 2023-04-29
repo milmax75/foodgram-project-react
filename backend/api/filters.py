@@ -8,11 +8,12 @@ from rest_framework.filters import SearchFilter
 
 class IngredientsFilter(SearchFilter):
     '''Ingredients objects filter.'''
+
     search_param = 'name'
 
 
 class TagsMultiChoiceField(MultipleChoiceField):
-    '''Validation as field class for Tags Filter'''
+    '''Validation as field_class for Tags Filter'''
 
     def validate(self, value):
         if self.required and not value:
@@ -41,13 +42,13 @@ class RecipesFilter(FilterSet):
     author = filters.AllValuesMultipleFilter(
         field_name='author__id', label='Author'
     )
-    is_in_shop_cart = filters.BooleanFilter(
+    is_in_shopping_cart = filters.BooleanFilter(
         widget=BooleanWidget(), label='In shop cart'
     )
-    is_in_favs = filters.BooleanFilter(
+    is_favorited = filters.BooleanFilter(
         widget=BooleanWidget(), label='In favorit'
     )
 
     class Meta:
         model = Recipe
-        fields = ('tags', 'author', 'is_in_shop_cart', 'is_in_favs')
+        fields = ('tags', 'author', 'is_in_shopping_cart', 'is_favorited')
