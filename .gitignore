@@ -136,6 +136,7 @@ backend/media/
 
 # my different tries
 _backend/
+__backend/
 
 # vscode
 backend/.vscode/
