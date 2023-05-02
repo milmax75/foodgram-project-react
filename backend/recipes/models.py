@@ -140,12 +140,8 @@ class Tag(models.Model):
     color = models.CharField(
         max_length=7,
         unique=True,
-        validators=[
-            RegexValidator(
-                "^#([a-fA-F0-9]{6})",
-                message="Only HEX-codes accepted",
-            )
-        ],
+        validators=(RegexValidator("^#([a-fA-F0-9]{6})",
+                                   message="Only HEX-codes accepted"),)
     )
     slug = models.SlugField(unique=True)
 

@@ -135,7 +135,7 @@ class CreateUpdateRecipeSerializer(GetIngredientsMixin,
         many=True, queryset=Tag.objects.all()
     )
     ingredients = serializers.SerializerMethodField()
-    image = Base64ImageField()
+    image = Base64ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Recipe

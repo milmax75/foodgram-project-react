@@ -5,6 +5,8 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+    # ports:
+      # - "8000:8000" #?????
     volumes:
       - ../frontend/:/app/result_build/
   nginx:

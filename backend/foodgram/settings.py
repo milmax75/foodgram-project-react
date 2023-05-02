@@ -182,3 +182,7 @@ DJOSER = {
     },
     "HIDE_USERS": False,
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
