@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', default='postgres'),
         'USER': os.getenv('POSTGRES_USER', default='${{ secrets.DB_USER }}'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='${{ secrets.DB_PSW }}'),
-        'HOST': os.getenv('DB_HOST', default='db'),
+        'HOST': os.getenv('DB_HOST', default='${{ secrets.DB_HOST }}'),
         'PORT': os.getenv('DB_PORT', default='5432')
     }
 }
