@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='${{ secrets.SECRET_KEY }}')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['62.84.118.104', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -65,7 +65,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:3000',  # ?????????
+    'http://localhost:3000',  # ?????????
 ] 
 
 ROOT_URLCONF = 'foodgram.urls'
@@ -141,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,4133 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO foodgram_user;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO foodgram_user;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO foodgram_user;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: authtoken_token; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.authtoken_token (
+    key character varying(40) NOT NULL,
+    created timestamp with time zone NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.authtoken_token OWNER TO foodgram_user;
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO foodgram_user;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO foodgram_user;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO foodgram_user;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO foodgram_user;
+
+--
+-- Name: recipes_favourites; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_favourites (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_favourites OWNER TO foodgram_user;
+
+--
+-- Name: recipes_favourites_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_favourites_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_favourites_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_favourites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_favourites_id_seq OWNED BY public.recipes_favourites.id;
+
+
+--
+-- Name: recipes_ingredientinrecipe; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_ingredientinrecipe (
+    id integer NOT NULL,
+    amount integer NOT NULL,
+    ingredient_id integer NOT NULL,
+    recipe_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_ingredientinrecipe OWNER TO foodgram_user;
+
+--
+-- Name: recipes_ingredientinrecipe_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_ingredientinrecipe_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_ingredientinrecipe_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_ingredientinrecipe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_ingredientinrecipe_id_seq OWNED BY public.recipes_ingredientinrecipe.id;
+
+
+--
+-- Name: recipes_ingredients; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_ingredients (
+    id integer NOT NULL,
+    name character varying(254) NOT NULL,
+    measurement_unit text NOT NULL
+);
+
+
+ALTER TABLE public.recipes_ingredients OWNER TO foodgram_user;
+
+--
+-- Name: recipes_ingredients_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_ingredients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_ingredients_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_ingredients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_ingredients_id_seq OWNED BY public.recipes_ingredients.id;
+
+
+--
+-- Name: recipes_recipe; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_recipe (
+    id integer NOT NULL,
+    name text NOT NULL,
+    text character varying(500) NOT NULL,
+    cooking_time integer NOT NULL,
+    image character varying(100) NOT NULL,
+    author_id integer
+);
+
+
+ALTER TABLE public.recipes_recipe OWNER TO foodgram_user;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_recipe_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_recipe_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_recipe_id_seq OWNED BY public.recipes_recipe.id;
+
+
+--
+-- Name: recipes_recipe_tags; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_recipe_tags (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_recipe_tags OWNER TO foodgram_user;
+
+--
+-- Name: recipes_recipe_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_recipe_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_recipe_tag_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_recipe_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_recipe_tag_id_seq OWNED BY public.recipes_recipe_tags.id;
+
+
+--
+-- Name: recipes_shoplist; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_shoplist (
+    id integer NOT NULL,
+    recipe_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.recipes_shoplist OWNER TO foodgram_user;
+
+--
+-- Name: recipes_shoplist_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_shoplist_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_shoplist_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_shoplist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_shoplist_id_seq OWNED BY public.recipes_shoplist.id;
+
+
+--
+-- Name: recipes_tag; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.recipes_tag (
+    id integer NOT NULL,
+    name character varying(254) NOT NULL,
+    color character varying(7) NOT NULL,
+    slug character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.recipes_tag OWNER TO foodgram_user;
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.recipes_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipes_tag_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.recipes_tag_id_seq OWNED BY public.recipes_tag.id;
+
+
+--
+-- Name: users_follow; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.users_follow (
+    id integer NOT NULL,
+    author_id integer NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT no_selfy CHECK ((NOT (user_id = author_id)))
+);
+
+
+ALTER TABLE public.users_follow OWNER TO foodgram_user;
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.users_follow_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_follow_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.users_follow_id_seq OWNED BY public.users_follow.id;
+
+
+--
+-- Name: users_usercustomized; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.users_usercustomized (
+    id integer NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    username character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    first_name text NOT NULL,
+    last_name text NOT NULL,
+    password character varying(150) NOT NULL,
+    role character varying(10) NOT NULL
+);
+
+
+ALTER TABLE public.users_usercustomized OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_groups; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.users_usercustomized_groups (
+    id integer NOT NULL,
+    usercustomized_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_usercustomized_groups OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.users_usercustomized_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_usercustomized_groups_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.users_usercustomized_groups_id_seq OWNED BY public.users_usercustomized_groups.id;
+
+
+--
+-- Name: users_usercustomized_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.users_usercustomized_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_usercustomized_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.users_usercustomized_id_seq OWNED BY public.users_usercustomized.id;
+
+
+--
+-- Name: users_usercustomized_user_permissions; Type: TABLE; Schema: public; Owner: foodgram_user
+--
+
+CREATE TABLE public.users_usercustomized_user_permissions (
+    id integer NOT NULL,
+    usercustomized_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_usercustomized_user_permissions OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: foodgram_user
+--
+
+CREATE SEQUENCE public.users_usercustomized_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_usercustomized_user_permissions_id_seq OWNER TO foodgram_user;
+
+--
+-- Name: users_usercustomized_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: foodgram_user
+--
+
+ALTER SEQUENCE public.users_usercustomized_user_permissions_id_seq OWNED BY public.users_usercustomized_user_permissions.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: recipes_favourites id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_favourites ALTER COLUMN id SET DEFAULT nextval('public.recipes_favourites_id_seq'::regclass);
+
+
+--
+-- Name: recipes_ingredientinrecipe id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredientinrecipe ALTER COLUMN id SET DEFAULT nextval('public.recipes_ingredientinrecipe_id_seq'::regclass);
+
+
+--
+-- Name: recipes_ingredients id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredients ALTER COLUMN id SET DEFAULT nextval('public.recipes_ingredients_id_seq'::regclass);
+
+
+--
+-- Name: recipes_recipe id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe ALTER COLUMN id SET DEFAULT nextval('public.recipes_recipe_id_seq'::regclass);
+
+
+--
+-- Name: recipes_recipe_tags id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags ALTER COLUMN id SET DEFAULT nextval('public.recipes_recipe_tag_id_seq'::regclass);
+
+
+--
+-- Name: recipes_shoplist id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_shoplist ALTER COLUMN id SET DEFAULT nextval('public.recipes_shoplist_id_seq'::regclass);
+
+
+--
+-- Name: recipes_tag id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_tag ALTER COLUMN id SET DEFAULT nextval('public.recipes_tag_id_seq'::regclass);
+
+
+--
+-- Name: users_follow id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_follow ALTER COLUMN id SET DEFAULT nextval('public.users_follow_id_seq'::regclass);
+
+
+--
+-- Name: users_usercustomized id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized ALTER COLUMN id SET DEFAULT nextval('public.users_usercustomized_id_seq'::regclass);
+
+
+--
+-- Name: users_usercustomized_groups id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_groups ALTER COLUMN id SET DEFAULT nextval('public.users_usercustomized_groups_id_seq'::regclass);
+
+
+--
+-- Name: users_usercustomized_user_permissions id; Type: DEFAULT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.users_usercustomized_user_permissions_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add Token	6	add_token
+22	Can change Token	6	change_token
+23	Can delete Token	6	delete_token
+24	Can view Token	6	view_token
+25	Can add token	7	add_tokenproxy
+26	Can change token	7	change_tokenproxy
+27	Can delete token	7	delete_tokenproxy
+28	Can view token	7	view_tokenproxy
+29	Can add user	8	add_usercustomized
+30	Can change user	8	change_usercustomized
+31	Can delete user	8	delete_usercustomized
+32	Can view user	8	view_usercustomized
+33	Can add favourites	9	add_favourites
+34	Can change favourites	9	change_favourites
+35	Can delete favourites	9	delete_favourites
+36	Can view favourites	9	view_favourites
+37	Can add follow	10	add_follow
+38	Can change follow	10	change_follow
+39	Can delete follow	10	delete_follow
+40	Can view follow	10	view_follow
+41	Can add ingredients	11	add_ingredients
+42	Can change ingredients	11	change_ingredients
+43	Can delete ingredients	11	delete_ingredients
+44	Can view ingredients	11	view_ingredients
+45	Can add recipe	12	add_recipe
+46	Can change recipe	12	change_recipe
+47	Can delete recipe	12	delete_recipe
+48	Can view recipe	12	view_recipe
+49	Can add tag	13	add_tag
+50	Can change tag	13	change_tag
+51	Can delete tag	13	delete_tag
+52	Can view tag	13	view_tag
+53	Can add shop list	14	add_shoplist
+54	Can change shop list	14	change_shoplist
+55	Can delete shop list	14	delete_shoplist
+56	Can view shop list	14	view_shoplist
+57	Can add follow	15	add_follow
+58	Can change follow	15	change_follow
+59	Can delete follow	15	delete_follow
+60	Can view follow	15	view_follow
+61	Can add ingredient in recipe	16	add_ingredientinrecipe
+62	Can change ingredient in recipe	16	change_ingredientinrecipe
+63	Can delete ingredient in recipe	16	delete_ingredientinrecipe
+64	Can view ingredient in recipe	16	view_ingredientinrecipe
+\.
+
+
+--
+-- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.authtoken_token (key, created, user_id) FROM stdin;
+4d74e9e7815b42bf313eb66b62e0a498db89bc5d	2023-05-01 09:09:34.559809+03	5
+3775dd849689486304b1e3aeddc4d99e7e85ccca	2023-05-04 18:06:35.155869+03	9
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2023-04-18 18:41:08.087081+03	1	Tag object (1)	1	[{"added": {}}]	13	5
+2	2023-04-18 18:42:00.844254+03	1	Tag object (1)	2	[{"changed": {"fields": ["name", "color", "slug"]}}]	13	5
+3	2023-04-18 18:43:04.333716+03	1	Tag object (1)	2	[{"changed": {"fields": ["name", "color", "slug"]}}]	13	5
+4	2023-04-18 18:43:30.17272+03	1	Tag object (1)	2	[{"changed": {"fields": ["name", "color", "slug"]}}]	13	5
+5	2023-04-18 18:44:20.834057+03	2	Tag object (2)	1	[{"added": {}}]	13	5
+6	2023-04-18 18:45:23.703012+03	3	Tag object (3)	1	[{"added": {}}]	13	5
+7	2023-04-18 18:45:47.870657+03	4	Tag object (4)	1	[{"added": {}}]	13	5
+8	2023-04-19 21:17:05.0007+03	26	Recipe object (26)	3		12	5
+9	2023-04-19 21:17:05.006012+03	25	Recipe object (25)	3		12	5
+10	2023-04-19 21:17:05.007362+03	24	Recipe object (24)	3		12	5
+11	2023-04-19 21:17:05.008606+03	23	Recipe object (23)	3		12	5
+12	2023-04-19 21:17:05.009737+03	22	Recipe object (22)	3		12	5
+13	2023-04-20 13:07:39.833363+03	38	Recipe object (38)	3		12	5
+14	2023-04-20 13:07:39.835435+03	37	Recipe object (37)	3		12	5
+15	2023-04-20 13:07:39.836494+03	36	Recipe object (36)	3		12	5
+16	2023-04-20 13:07:39.837536+03	35	Recipe object (35)	3		12	5
+17	2023-04-20 13:07:39.838362+03	34	Recipe object (34)	3		12	5
+18	2023-04-20 13:07:39.839267+03	33	Recipe object (33)	3		12	5
+19	2023-04-20 13:07:39.840284+03	32	Recipe object (32)	3		12	5
+20	2023-04-20 13:07:39.841211+03	31	Recipe object (31)	3		12	5
+21	2023-04-20 13:07:39.842102+03	30	Recipe object (30)	3		12	5
+22	2023-04-20 13:07:39.84281+03	29	Recipe object (29)	3		12	5
+23	2023-04-20 13:07:39.843523+03	28	Recipe object (28)	3		12	5
+24	2023-04-20 13:07:39.844664+03	27	Recipe object (27)	3		12	5
+25	2023-04-20 13:07:39.846071+03	21	Recipe object (21)	3		12	5
+26	2023-04-20 17:52:18.732554+03	44	Recipe object (44)	3		12	5
+27	2023-04-20 17:52:18.7372+03	43	Recipe object (43)	3		12	5
+28	2023-04-20 17:52:18.738474+03	42	Recipe object (42)	3		12	5
+29	2023-04-20 17:52:18.739343+03	41	Recipe object (41)	3		12	5
+30	2023-04-20 17:52:29.267411+03	40	Recipe object (40)	3		12	5
+31	2023-04-20 17:52:29.269403+03	39	Recipe object (39)	3		12	5
+32	2023-04-20 17:54:11.451115+03	5	Recipe object (5)	2	[{"changed": {"fields": ["name"]}}]	12	5
+33	2023-04-20 17:56:39.387588+03	46	Recipe object (46)	1	[{"added": {}}, {"added": {"name": "ingredient in recipe", "object": "IngredientInRecipe object (4)"}}]	12	5
+34	2023-04-23 15:30:57.243843+03	59	Recipe object (59)	1	[{"added": {}}, {"added": {"name": "ingredient in recipe", "object": "IngredientInRecipe object (26)"}}, {"added": {"name": "ingredient in recipe", "object": "IngredientInRecipe object (27)"}}]	12	5
+35	2023-04-23 15:32:20.925571+03	5	Recipe object (5)	3		12	5
+36	2023-04-23 15:32:20.938563+03	46	Recipe object (46)	3		12	5
+37	2023-04-23 15:32:20.940361+03	47	Recipe object (47)	3		12	5
+38	2023-04-23 15:32:20.941836+03	48	Recipe object (48)	3		12	5
+39	2023-04-23 15:32:20.943088+03	49	Recipe object (49)	3		12	5
+40	2023-04-23 15:32:20.944488+03	50	Recipe object (50)	3		12	5
+41	2023-04-23 15:32:20.945992+03	51	Recipe object (51)	3		12	5
+42	2023-04-23 15:32:20.947168+03	52	Recipe object (52)	3		12	5
+43	2023-04-23 15:32:20.948291+03	53	Recipe object (53)	3		12	5
+44	2023-04-23 15:32:20.949482+03	54	Recipe object (54)	3		12	5
+45	2023-04-23 15:32:20.950741+03	55	Recipe object (55)	3		12	5
+46	2023-04-23 15:32:20.952257+03	56	Recipe object (56)	3		12	5
+47	2023-04-23 15:32:20.954159+03	57	Recipe object (57)	3		12	5
+48	2023-05-01 09:15:58.69112+03	58	Свеклу, рукколу и козий сыр смешать, залить маслом и бальзамиком	2	[{"changed": {"fields": ["name"]}}]	12	5
+49	2023-05-01 09:16:05.998528+03	58	Свеклу, рукколу и козий сыр смешать, залить маслом и бальзамиком	2	[{"changed": {"fields": ["name"]}}]	12	5
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	authtoken	token
+7	authtoken	tokenproxy
+8	users	usercustomized
+9	recipes	favourites
+10	recipes	follow
+11	recipes	ingredients
+12	recipes	recipe
+13	recipes	tag
+14	recipes	shoplist
+15	users	follow
+16	recipes	ingredientinrecipe
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2023-04-11 18:42:01.098396+03
+2	contenttypes	0002_remove_content_type_name	2023-04-11 18:42:01.108103+03
+3	auth	0001_initial	2023-04-11 18:42:01.124085+03
+4	auth	0002_alter_permission_name_max_length	2023-04-11 18:42:01.144233+03
+5	auth	0003_alter_user_email_max_length	2023-04-11 18:42:01.148679+03
+6	auth	0004_alter_user_username_opts	2023-04-11 18:42:01.153234+03
+7	auth	0005_alter_user_last_login_null	2023-04-11 18:42:01.158794+03
+8	auth	0006_require_contenttypes_0002	2023-04-11 18:42:01.160686+03
+9	auth	0007_alter_validators_add_error_messages	2023-04-11 18:42:01.168357+03
+10	auth	0008_alter_user_username_max_length	2023-04-11 18:42:01.173211+03
+11	auth	0009_alter_user_last_name_max_length	2023-04-11 18:42:01.178077+03
+12	auth	0010_alter_group_name_max_length	2023-04-11 18:42:01.183883+03
+13	auth	0011_update_proxy_permissions	2023-04-11 18:42:01.189041+03
+14	users	0001_initial	2023-04-11 18:42:01.211137+03
+15	admin	0001_initial	2023-04-11 18:42:01.234315+03
+16	admin	0002_logentry_remove_auto_add	2023-04-11 18:42:01.245183+03
+17	admin	0003_logentry_add_action_flag_choices	2023-04-11 18:42:01.255096+03
+18	authtoken	0001_initial	2023-04-11 18:42:01.264982+03
+19	authtoken	0002_auto_20160226_1747	2023-04-11 18:42:01.29659+03
+20	authtoken	0003_tokenproxy	2023-04-11 18:42:01.299488+03
+21	recipes	0001_initial	2023-04-11 18:42:01.331783+03
+22	recipes	0002_auto_20230411_1541	2023-04-11 18:42:01.415715+03
+23	sessions	0001_initial	2023-04-11 18:42:01.454972+03
+24	recipes	0003_auto_20230415_1522	2023-04-15 18:22:20.500581+03
+25	users	0002_auto_20230415_1522	2023-04-15 18:22:20.52117+03
+26	recipes	0004_delete_follow	2023-04-16 12:43:06.194697+03
+27	users	0003_auto_20230416_0942	2023-04-16 12:43:06.240834+03
+28	recipes	0005_auto_20230418_1924	2023-04-18 22:25:09.381133+03
+29	recipes	0006_auto_20230418_2113	2023-04-19 00:13:12.010918+03
+30	recipes	0007_auto_20230419_0922	2023-04-19 12:22:58.264396+03
+31	recipes	0008_auto_20230419_0938	2023-04-19 12:38:45.408323+03
+32	recipes	0009_auto_20230419_1253	2023-04-19 15:54:11.330693+03
+33	recipes	0010_auto_20230419_1254	2023-04-19 15:54:43.167034+03
+34	recipes	0011_auto_20230419_1924	2023-04-19 22:25:04.806318+03
+35	recipes	0012_auto_20230420_1035	2023-04-20 13:36:13.24674+03
+36	recipes	0013_auto_20230423_1112	2023-04-23 14:12:36.046641+03
+37	recipes	0014_auto_20230427_1212	2023-04-27 15:12:51.061784+03
+38	recipes	0015_auto_20230429_0810	2023-04-29 11:10:39.168071+03
+39	users	0004_auto_20230429_0810	2023-04-29 11:10:39.182196+03
+40	recipes	0016_auto_20230429_1538	2023-04-29 18:38:21.001822+03
+41	recipes	0017_auto_20230429_1543	2023-04-29 18:43:57.588561+03
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+hrkr6sz5ufip5ic5grnv1cheyufamnkn	ZmFiYThiOGE1NWJmYTg4ZWQ3ZDUyZjA5NjQwZTUzNTAyNTRmMGM5NDp7Il9hdXRoX3VzZXJfaWQiOiI1IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjNThlZjUyYjMyMmI3Zjc3M2YzYzk0Y2Y0NjEyM2EzMjgyOTI5MTZmIn0=	2023-05-02 18:30:04.727716+03
+\.
+
+
+--
+-- Data for Name: recipes_favourites; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_favourites (id, recipe_id, user_id) FROM stdin;
+7	62	1
+8	63	1
+9	64	1
+10	62	9
+\.
+
+
+--
+-- Data for Name: recipes_ingredientinrecipe; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_ingredientinrecipe (id, amount, ingredient_id, recipe_id) FROM stdin;
+26	500	915	59
+27	200	227	59
+36	10	1123	62
+47	3	88	63
+48	50	1161	63
+49	100	1488	63
+50	300	1568	63
+51	150	1767	63
+52	100	2182	64
+53	3	1684	64
+\.
+
+
+--
+-- Data for Name: recipes_ingredients; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_ingredients (id, name, measurement_unit) FROM stdin;
+1	абрикосовое пюре	г
+2	абрикосовый джем	г
+3	абрикосовый сок	стакан
+4	абрикосы	г
+5	абрикосы консервированные	г
+6	авокадо	по вкусу
+7	агава сироп	г
+8	агар-агар	г
+9	аграм	г
+10	аджика	г
+11	аджика зеленая	г
+12	айва	по вкусу
+13	айвовое пюре	г
+14	айран	г
+15	айсинг	г
+16	акула стейки	г
+17	алкоголь	стакан
+18	алкоголь крепкий	ст. л.
+19	алыча	г
+20	альбухара	шт.
+21	альмехи	г
+22	амарантовая мука	г
+23	ананасовый сироп	г
+24	ананасовый сок	г
+25	ананасы	г
+26	ананасы вяленые	г
+27	ананасы консервированные	по вкусу
+28	анис	по вкусу
+29	анис звездочки	г
+30	анисовый ликер	мл
+31	анис семена	г
+32	анчоусы	г
+33	апельсиновая вода	г
+34	апельсиновая цедра	г
+35	апельсиновая эссенция	ч. л.
+36	апельсиновое варенье	г
+37	апельсиновые цукаты	г
+38	апельсиновый джем	г
+39	апельсиновый джем с имбирем	г
+40	апельсиновый ликер	г
+41	апельсиновый сироп	стакан
+42	апельсиновый сок	по вкусу
+43	апельсиновый сок свежевыжатый	г
+44	апельсиновый уксус	ст. л.
+45	апельсиновый экстракт	ч. л.
+46	апельсины	г
+47	апельсины красные	шт.
+48	апельсины крупные	шт.
+49	арахис	г
+50	арахис жареный	г
+51	арахисовая паста	г
+52	арахисовое масло	г
+53	арахис соленый	г
+54	арбузная мякоть	г
+55	арбузы	г
+56	аргановое масло	г
+57	аришта	г
+58	ароматизатор	г
+59	ароматизатор "ананас"	по вкусу
+60	ароматизатор "вишня"	капля
+61	ароматизатор "малина"	капля
+62	ароматизатор "ром"	г
+63	артишоки	г
+64	артишоки в масле	г
+65	артишоки маринованные	г
+66	аспирин	шт.
+67	ассорти мясное	г
+68	ассорти овощное	г
+69	ассорти фруктовое	г
+70	ассорти ягодное	г
+71	аши	г
+72	багет	г
+73	багет вчерашний	г
+74	багет мини	г
+75	бадан	звездочка
+76	бадьян	щепотка
+77	базилик лимонный	г
+78	базилик свежий	г
+79	базилик сушеный	г
+80	базилик тайский	горсть
+81	базилик фиолетовый	г
+82	баклажаны	по вкусу
+83	баклажаны мини	г
+84	баклажаны тайские	г
+85	балык	г
+86	бальзам	г
+87	бальзамический крем	стакан
+88	бальзамический соус	ст. л.
+89	бальзамический уксус	стакан
+90	бальзам рижский черный	ст. л.
+91	бамия	г
+92	банановое пюре	г
+93	банановые чипсы	горсть
+94	банановый зеленый сироп	мл
+95	банановый ликер	мл
+96	бананы	г
+97	бананы мини	г
+98	барабулька	г
+99	бараний ливер	г
+100	бараний окорок на косточке	кусок
+101	бараний фарш	г
+102	баранина	г
+103	баранки	г
+104	бараньи антрекоты	кг
+105	бараньи голяшки	шт.
+106	бараньи потроха	кг
+107	бараньи ребрышки	шт.
+108	баранья лопатка	кг
+109	баранья нога	г
+110	баранья печень	г
+111	барбарис	г
+112	барбарис вяленый	ст. л.
+113	барбарис молотый	г
+114	бастурма	г
+115	батат	г
+116	батон	г
+117	батончики шоколадные	г
+118	безе	г
+119	бекон	по вкусу
+120	бекон варено-копченый	г
+121	бекон сырокопченый	г
+122	белорыбица	г
+123	бирнель	мл
+124	бисквик смесь готовая	пакет
+125	бисквит	г
+126	бисквитная крошка	г
+127	бисквитный корж	г
+128	бисквитный рулет	г
+129	бисквит шоколадный	г
+130	бифштекс	шт.
+131	блинная мука	г
+132	блины готовые	г
+133	блины овсяные	шт.
+134	бобовые ростки	г
+135	бобы	г
+136	бобы мунг пророщенные	г
+137	бобы тонка	шт.
+138	ботарга	г
+139	брезаола	г
+140	бренди	г
+141	брокколи замороженная	г
+142	брокколи свежая	г
+143	брусника замороженная	г
+144	брусника свежая	г
+145	брусника сушеная	г
+146	брусничное варенье	г
+147	брусничный соус	г
+148	брынза	по вкусу
+149	брынза сербская	г
+150	брюква	г
+151	буженина	г
+152	бузина сироп	ст. л.
+153	букет гарни	пучок
+154	булгур	г
+155	булка	кусок
+156	булка белая	г
+157	булка сдобная	г
+158	булочки	г
+159	булочки белые черствые	г
+160	булочки бриошь	шт.
+161	булочки вчерашние	шт.
+162	булочки для гамбургеров	шт.
+163	булочки зерновые	шт.
+164	булочки ржаные	кусок
+165	булочки с кунжутом	шт.
+166	бульон	г
+167	бульонные кубики	г
+168	бурбон	г
+169	Буррата	г
+170	буряк	г
+171	бусинки кондитерские	ч. л.
+172	бусинки кондитерские серебряные	по вкусу
+173	бычий хвост	г
+174	ванилин	г
+175	ваниль в стручках	г
+176	ванильная настойка	ст. л.
+177	ванильная эссенция	г
+178	ванильный порошок	г
+179	ванильный сироп	г
+180	ванильный экстракт	по вкусу
+181	варенье	г
+182	васаби	г
+183	вафельная крошка	г
+184	вафельные коржи	г
+185	вафельные трубочки	г
+186	вафли	г
+187	вафли шоколадные	г
+188	вермишель	г
+189	вермишель яичная	г
+190	вермут	г
+191	вермут белый	г
+192	вермут сухой	г
+193	ветчина	г
+194	ветчина вареная	г
+195	ветчина варено-копченая	кусок
+196	ветчина копченая	г
+197	ветчина пармская	г
+198	ветчина сырокопченая	г
+199	вешенки	г
+200	винегрет	г
+201	винный камень	щепотка
+202	винный уксус	г
+203	винный уксус белый	г
+204	винный уксус красный	ч. л.
+205	винный уксус на чесноке	ч. л.
+206	винный уксус на эстрагоне	ст. л.
+207	вино белое	по вкусу
+208	вино белое полусладкое	г
+209	вино белое полусухое	г
+210	вино белое сладкое	г
+211	вино белое столовое	стакан
+212	вино белое сухое	г
+213	виноград	г
+214	виноград без косточек	г
+215	виноград белый	г
+216	виноград изабелла	кг
+217	виноградное желе	ст. л.
+218	виноградные листья	г
+219	виноградные листья маринованные	г
+220	виноградные листья молодые	шт.
+221	виноградный сок	г
+222	виноградный сок осветленный	ч. л.
+223	виноград синий	г
+224	виноград черный	г
+225	вино десертное	г
+226	вино игристое сухое	г
+227	вино красное	г
+228	вино красное полусладкое	г
+229	вино красное полусухое	г
+230	вино красное сладкое	г
+231	вино красное сухое	г
+232	вино крепленое	г
+233	вино розовое полусладкое	ст. л.
+234	вино розовое полусухое	г
+235	виски	г
+236	витамин C в порошке	г
+237	вишневая настойка	мл
+238	вишневое варенье	г
+239	вишневые листья	г
+240	вишневый джем	г
+241	вишневый ликер	по вкусу
+242	вишневый сироп	стакан
+243	вишневый сок	г
+244	вишня	г
+245	вишня вяленая	г
+246	вишня замороженная	г
+247	вишня засахаренная кондитерская	шт.
+248	вишня коктейльная	г
+249	вишня мараскино	шт.
+250	вишня, протертая с сахаром	г
+251	вода	г
+252	вода минеральная без газа	стакан
+253	вода минеральная газированная	г
+254	водка	г
+255	водка анисовая	ч. л.
+256	водоросли	г
+257	вустерширский соус	г
+258	галангал корень	долька
+259	галеты	г
+260	гамбургер	г
+261	ганаш	г
+262	гарам масала	г
+263	гарнир	г
+264	гаспачо	г
+265	гвоздика	г
+266	гвоздика молотая	по вкусу
+267	герань листья	г
+268	геркулес	г
+269	глазурь	г
+270	глазурь белая	г
+271	глазурь готовая	по вкусу
+272	глазурь черная	по вкусу
+273	глазурь шоколадная белая	г
+274	глутамат натрия	г
+275	глюкоза	г
+276	глюкоза сироп	г
+277	говядина	г
+278	говядина на кости	г
+279	говяжий фарш	по вкусу
+280	говяжий язык	г
+281	говяжье сердце	по вкусу
+282	говяжьи бифштексы	г
+283	говяжьи голяшки	г
+284	говяжьи легкие	г
+285	говяжьи ребра	г
+286	говяжьи стейки рибай	г
+287	говяжья вырезка	шт.
+288	говяжья грудинка	кг
+289	говяжья лопатка	г
+290	говяжья мозговая кость	шт.
+291	говяжья мякоть	кг
+292	говяжья печень	шт.
+293	говяжья черева	г
+294	говяжья шейка	кг
+295	годжи	г
+296	голец филе	шт.
+297	голубика	г
+298	голубика замороженная	г
+299	голубь	г
+300	горбуша	по вкусу
+301	горбуша в собственном соку	банка
+302	горбуша филе	г
+303	горгонзола	г
+304	горгонзола пиканте	г
+305	горох	г
+306	горох колотый	г
+307	гороховые ростки	горсть
+308	гороховый суп	г
+309	горошек зеленый	г
+310	горошек зеленый замороженный	г
+311	горошек зеленый консервированный	г
+312	горошек стручковый свежий	г
+313	горчица	г
+314	горчица дижонская	г
+315	горчица дижонская с медом	г
+316	горчица желтая семена	г
+317	горчица острая	г
+318	горчица русская	ст. л.
+319	горчица семена	г
+320	горчица с зернами	г
+321	горчица сухая	г
+322	горчица французская	г
+323	горчица цитрусовая	г
+324	горчичное масло	г
+325	горчичный порошок	г
+326	грана падано	ст. л.
+327	гранатные зерна	г
+328	гранатовая паста	ст. л.
+329	гранатовый сироп	г
+330	гранатовый сок	г
+331	гранатовый сок свежевыжатый	мл
+332	гранатовый соус	ч. л.
+333	гранаты	г
+334	гранита	г
+335	гранола с орехами	г
+336	граппа	ч. л.
+337	гратен	кг
+338	грейпфрутовая цедра	г
+339	грейпфрутовый сок	г
+340	грейпфруты	г
+341	грейпфруты розовые	г
+342	гренадин	г
+343	гренки	г
+344	грецкие орехи	г
+345	грецкие орехи рубленые	г
+346	гречневая крупа	г
+347	гречневая крупа зеленая	ст. л.
+348	гречневая лапша соба	г
+349	гречневая мука	г
+350	гречневое молоко	стакан
+351	гречневые хлопья	г
+352	грибы	г
+353	грибы белые	г
+354	грибы белые замороженные	г
+355	грибы белые маринованные	г
+356	грибы белые сухие	г
+357	грибы замороженные	г
+358	грибы замороженные (опята и маслята)	г
+359	грибы лесные	г
+360	грибы маринованные	г
+361	грибы свежие	г
+362	грибы соленые	г
+363	грибы соломенные консервированные	шт.
+364	грибы сухие	г
+365	грибы шиитаке	г
+366	грибы шиитаке сухие	г
+367	гриль	г
+368	гриссини	г
+369	грудинка	г
+370	грудинка варено-копченая	г
+371	грудинка копченая	по вкусу
+372	грушевое пюре	г
+373	грушевый ликер	мл
+374	грушевый сироп	мл
+375	грушевый сок	г
+376	грушевый уксус	ст. л.
+377	груши	по вкусу
+378	груши вяленые	г
+379	грюйер	г
+380	гуава	шт.
+381	гуанчиале	г
+382	гурьевская каша	г
+383	гусиная грудка копченая	г
+384	гусиная печень	г
+385	гусиный жир	ст. л.
+386	гусь	г
+387	гусь тушка	кг
+388	дайкон	г
+389	детское питание	г
+390	джем	г
+391	джин	г
+392	джусай	г
+393	диоксид титана	г
+394	долма	г
+395	дорада	шт.
+396	дорада потрошеная с головой	шт.
+397	дорада с головой	шт.
+398	дорада тушка	шт.
+399	драже	г
+400	дрожжи домашние	г
+401	дрожжи свежие	г
+402	дрожжи сухие	по вкусу
+403	дубовая кора	г
+404	душица	г
+405	дыня	г
+406	ежевика	г
+407	ежевика замороженная	г
+408	ерш	г
+409	ёрш-носарь	шт.
+410	желатин	г
+411	желатин листовой	по вкусу
+412	желе	г
+413	желе для торта	упаковка
+414	желирующее вещество	упаковка
+415	желирующий сахар	г
+416	женьшень	г
+417	жидкий дым	г
+418	жимолость	г
+419	жир	г
+420	жир вытопленный	стакан
+421	жир кулинарный	г
+422	жир растительный	г
+423	заатар	щепотка
+424	завтрак сухой	г
+425	завтрак сухой подушечки	г
+426	загуститель для сливок	г
+427	зайчатина	г
+428	закваска	пакет
+429	закваска вечная	г
+430	заменитель сахара	по вкусу
+431	заменитель сахара стевия	г
+432	заправка для салатов готовая	г
+433	зверобой	по вкусу
+434	зелень	г
+435	зелень рубленая	г
+436	земляника	по вкусу
+437	земляника замороженная	г
+438	зефир	г
+439	зира	г
+440	злаковые хлопья	г
+441	зубатка	г
+442	зубатка филе	г
+443	изолят соевого протеина	г
+444	изюм	г
+445	изюм без косточек	г
+446	изюм белый	г
+447	изюм черный	г
+448	икра	г
+449	икра вяленой рыбы	г
+450	икра горбуши зернистая	г
+451	икра красная	г
+452	икра красной рыбы мелкая	г
+453	икра летучей рыбы	г
+454	икра лосося	г
+455	икра мойвы	г
+456	икра палтуса	г
+457	икра судака	г
+458	икра черная	г
+459	имбирное варенье	г
+460	имбирное печенье	по вкусу
+461	имбирные цукаты	ст. л.
+462	имбирь	г
+463	имбирь засахаренный	г
+464	имбирь корень	г
+465	имбирь маринованный	г
+466	имбирь молотый	г
+467	индейка	г
+468	индейка голень	г
+469	индейка грудка	г
+470	индейка копченая	г
+471	индейка тушка	шт.
+472	индейка фарш	г
+473	индейка филе	г
+474	индоутка	шт.
+475	индюшачья печень	г
+476	инжир	г
+477	инжир свежий	г
+478	инжир сушеный	г
+479	ирга	г
+480	ириски	г
+481	итальянские травы	г
+482	йогурт	г
+483	йогурт греческий	г
+484	йогурт жирный	г
+485	йогурт козий	г
+486	йогурт натуральный	г
+487	йогурт нежирный	г
+488	йогурт обезжиренный	г
+489	йогурт фруктовый	г
+490	кабачки	г
+491	кабачки замороженные	г
+492	кабачки молодые	г
+493	каджунская смесь специй	ст. л.
+494	какао	горсть
+495	какао-бобы	г
+496	какао-масло	г
+497	какао-порошок	по вкусу
+498	какао-порошок обезжиренный	г
+499	какао сгущенное	банка
+500	калина	по вкусу
+501	калина протертая	г
+502	калинджи семена	ч. л.
+503	кальвадос	г
+504	кальмары	г
+505	кальмары вареные	г
+506	кальмары замороженные	г
+507	кальмары консервированные	г
+508	кальмары филе	шт.
+509	камамбер	упаковка
+510	камбала	г
+511	камбала филе	г
+512	кампари	мл
+513	кандурин золотой	ч. л.
+514	каннеллони	г
+515	капеллини	г
+516	каперсы	г
+517	каперсы в винном уксусе	г
+518	каперсы маринованные	г
+519	капуста белокочанная	г
+520	капуста брюссельская	г
+521	капуста брюссельская замороженная	г
+522	капуста кале	г
+523	капуста квашеная	по вкусу
+524	капуста кольраби	г
+525	капуста краснокочанная	г
+526	капуста морская	по вкусу
+527	капуста морская замороженная	г
+528	капуста морская сушеная	г
+529	капуста пекинская	г
+530	капуста савойская	г
+531	капуста цветная	г
+532	капуста цветная замороженная	г
+533	капустный рассол	г
+534	капучино	г
+535	каракатица	г
+536	каракатица очищенная	г
+537	карамбола	г
+538	карамель	мл
+539	карамельный соус	г
+540	карамель с начинкой	г
+541	карамель соленая	г
+542	карась	г
+543	карбонад	г
+544	кардамон	г
+545	кардамон зерна	ч. л.
+546	кардамон молотый	г
+547	кардамон стручки	шт.
+548	каркаде	г
+549	карп	г
+550	карп зеркальный	кг
+551	карп филе	кг
+552	карри	г
+553	карри листья	г
+554	карри паста	пакет
+555	картофель	г
+556	картофель вареный	г
+557	картофель вареный в мундире	г
+558	картофель молодой	г
+559	картофельное пюре	по вкусу
+560	картофельные ньокки	г
+561	картофельные хлопья	г
+562	картофельные чипсы	г
+563	картофельный крахмал	г
+564	картофельный отвар	г
+565	картофельный хэш замороженный	г
+566	картофель печеный	г
+567	катык	г
+568	каффир-лайм листья	по вкусу
+569	каша	г
+570	каша для детского питания	г
+571	каштановая мука	г
+572	каштановый крем	г
+573	каштаны	г
+574	каштаны вареные	г
+575	каштаны консервированные	г
+576	каштаны очищенные	г
+577	квас	г
+578	квасное сусло	г
+579	квасной концентрат сухой	упаковка
+580	квас хлебный	г
+581	кедровая мука	г
+582	кедровые орехи	г
+583	кедровые орехи жареные	г
+584	кета	г
+585	кетчуп острый	по вкусу
+586	кетчуп томатный	г
+587	кетчуп тосканский	ст. л.
+588	кетчуп шашлычный	г
+589	кефаль	г
+590	кефир	по вкусу
+591	кефир 1%	г
+592	кефир 2,5%	г
+593	кефир 3,2%	г
+594	кефир обезжиренный	г
+595	кешью	г
+596	кивано	г
+597	киви	кг
+598	киви желе	г
+599	кижуч	г
+600	кижуч горячего копчения филе	г
+601	кизил	г
+602	килька	г
+603	кимчи	г
+604	кинза свежая	зубчик
+605	кинза сушеная	г
+606	киноа	г
+607	киноа молотая	г
+608	кипяток	г
+609	кирш	ст. л.
+610	кисель	г
+611	кисель сухой	г
+612	кисломолочный напиток Тан	мл
+613	кишки	г
+614	клейковина	г
+615	клементины	г
+616	кленовый сироп	г
+617	клубника	г
+618	клубника в сиропе	г
+619	клубника замороженная	г
+620	клубника, протертая с сахаром	г
+621	клубника сушеная	г
+622	клубничное варенье	г
+623	клубничное желе	упаковка
+624	клубничное пюре	г
+625	клубничный джем	г
+626	клубничный джем густой	мл
+627	клубничный компот	стакан
+628	клубничный ликер	г
+629	клубничный сироп	г
+630	клюква	г
+631	клюква вяленая	г
+632	клюква замороженная	г
+633	клюква, протертая с сахаром	г
+634	клюквенное варенье	г
+635	клюквенный джем	г
+636	клюквенный морс	ст. л.
+637	клюквенный сироп	г
+638	клюквенный соус	г
+639	козлиная печень	г
+640	козлятина молодая	кг
+641	кока-кола	ст. л.
+642	кокосовая вода	стакан
+643	кокосовая мука	ст. л.
+644	кокосовая стружка	г
+645	кокосовая стружка цветная	г
+646	кокосовое масло	мл
+647	кокосовое молоко	г
+648	кокосовые сливки	г
+649	кокосовый ликер	ст. л.
+650	кокосовый экстракт	г
+651	кокосы	г
+652	кола	г
+653	колбаса	г
+654	колбаса вареная	г
+655	колбаса варено-копченая	г
+656	колбаса копченая	г
+657	колбаса кровяная	г
+658	колбаса полукопченая	г
+659	колбаса сырокопченая	г
+660	колбаска свиная свежая (salsiccia)	шт.
+661	колбаски	г
+662	колбаски для жарки	г
+663	колбаски домашние	шт.
+664	колбаски охотничьи	г
+665	колбаски сырокопченые	шт.
+666	компот	г
+667	конопляное масло	ст. л.
+668	конопля семена	г
+669	конфеты	по вкусу
+670	конфеты M&M’s	г
+671	конфеты жевательные лакричные	г
+672	конфеты Коровка	г
+673	конфеты Трюфель	г
+674	конфитюр	по вкусу
+675	конфитюрка	упаковка
+676	коньяк	г
+677	копчености	г
+678	коренья	по вкусу
+679	кориандр	г
+680	кориандр зелень	г
+681	кориандр молотый	г
+682	кориандр семена	г
+683	коринка	ст. л.
+684	корица	г
+685	корица молотая	г
+686	корнишоны	г
+687	корнишоны маринованые	г
+688	корюшка	г
+689	корюшка горячего копчения	г
+690	кости	г
+691	кости мозговые	г
+692	кость сахарная	г
+693	кофе в зернах	стакан
+694	кофе зеленый	г
+695	кофейные зерна в шоколаде	г
+696	кофейный ликер	г
+697	кофейный ликер Kahlua	мл
+698	кофейный напиток	мл
+699	кофейный сироп	г
+700	кофейный экстракт	мл
+701	кофе молотый	ст. л.
+702	кофе растворимый	г
+703	кофе свежесваренный	г
+704	кофе черный	г
+705	кофе эспрессо	стакан
+706	крабовое мясо	г
+707	крабовые палочки	по вкусу
+708	краб снежный	по вкусу
+709	крабы	г
+710	крапива	г
+711	краситель-гель пищевой	шт.
+712	краситель пищевой	г
+713	краситель пищевой вишневый	щепотка
+714	краситель пищевой желтый	г
+831	лепешки	г
+715	краситель пищевой зеленый	ст. л.
+716	краситель пищевой красный	г
+717	краситель пищевой оранжевый	г
+718	краситель пищевой фиолетовый	г
+719	краситель пищевой черный	г
+720	красная смородина	г
+721	красная смородина, протертая с сахаром	ст. л.
+722	красноперка	шт.
+723	красносмородиновое варенье	г
+724	красный винный соус	г
+725	крахмал	г
+726	креветки	г
+727	креветки замороженные	г
+728	креветки королевские	г
+729	креветки очищенные	г
+730	креветки очищенные в рассоле	г
+731	креветки салатные	г
+732	креветки сушеные	г
+733	креветки тигровые	г
+734	крекер	г
+735	крекер соленый	г
+736	крем заварной	г
+737	крем заварной порошковый	г
+738	крем-фреш	г
+739	кресс-салат	г
+740	кровь	мл
+741	кролик	г
+742	кролик тушка	г
+743	кролик филе	г
+744	кроличья печень	г
+745	круассаны	по вкусу
+746	крутоны мелкие	г
+747	крыжовник	г
+748	крыжовниковое варенье	банка
+749	кукуруза	г
+750	кукуруза замороженная	г
+751	кукуруза консервированная	г
+752	кукуруза обжаренная кикос	г
+753	кукурузная крупа	г
+754	кукурузная мука	г
+755	кукурузное масло	г
+756	кукурузные лепешки	шт.
+757	кукурузные палочки	г
+758	кукурузные хлопья	г
+759	кукурузные хлопья глазированные	г
+760	кукурузные чипсы	г
+761	кукурузный (золотой) сироп	г
+762	кукурузный крахмал	по вкусу
+763	кумин	г
+764	кумкваты	горсть
+765	кунжут	г
+766	кунжутная мука	г
+767	кунжутная паста	г
+768	кунжутное масло	г
+769	кунжутные семечки	по вкусу
+770	кунжут черный	ч. л.
+771	купаты	шт.
+772	курага	по вкусу
+773	курдючное сало	г
+774	курдючный жир	г
+775	куриная ветчина	г
+776	куриная кожа	г
+777	куриная печень	г
+778	куриное карпаччо	г
+779	куриное филе	г
+780	куриные бедра	г
+781	куриные голени	г
+782	куриные голени копченые	шт.
+783	куриные грудки	г
+784	куриные грудки вареные	г
+785	куриные грудки копченые	г
+786	куриные желудочки	шт.
+787	куриные кости	г
+788	куриные крылья	г
+789	куриные окорочка	г
+790	куриные окорочка копченые	г
+791	куриные потрошки	г
+792	куриные сердечки	г
+793	куриный бульон	г
+794	куриный паштет	г
+795	куриный суповой набор	кг
+796	куриный фарш	г
+797	курица	г
+798	курица вареная	г
+799	курица для жарки	кг
+800	курица копченая	г
+801	курица тушка	г
+802	куркума	г
+803	куропатки	г
+804	кускус	г
+805	кускус жемчужный	стакан
+806	кэроб	г
+807	лаванда	г
+808	лаванда сушеная	щепотка
+809	лавандовый краситель	ч. л.
+810	лаваш	по вкусу
+811	лаваш армянский	г
+812	лаваш персидский круглый	г
+813	лаваш тонкий	пласт
+814	лавровые листья свежие	шт.
+815	лавровый лист	г
+816	лайм	г
+817	лайм листья	шт.
+818	лаймовая цедра	г
+819	лаймовый сок	г
+820	лангустины	шт.
+821	лапша	г
+822	лапша для лагмана	упаковка
+823	лапша ширатаки	г
+824	лапша яичная в гнездах	шт.
+825	латук	г
+826	легкие	г
+827	лед	г
+828	леди-фиш тушка	шт.
+829	лемонграсс (лимонное сорго)	г
+830	лен семена	г
+832	лепешки арабские	шт.
+833	лесные орехи	г
+834	лечо	г
+835	ливер	г
+836	ликер	г
+837	ликер Alchermes	г
+838	ликер Amaretto	г
+839	ликер Baileys	г
+840	ликер Cointreau	г
+841	ликер кремовый	г
+842	ликер сливочный	г
+843	лимонад	г
+844	лимонная кислота	г
+845	лимонная цедра	г
+846	лимонник стебель	г
+847	лимонник ягоды	г
+848	лимонные корочки засахаренные	г
+849	лимонные цукаты	г
+850	лимонный сок	г
+851	лимонный уксус	г
+852	лимонный экстракт	г
+853	лимончелло	г
+854	лимоны	г
+855	лингвине	шт.
+856	лисички	г
+857	лисички сушеные	г
+858	личи	шт.
+859	личи компот	г
+860	лобстер	г
+861	лонган	г
+862	лонгконг	шт.
+863	лососевые молоки	г
+864	лососевый фарш	г
+865	лосось	г
+866	лосось горячего копчения	г
+867	лосось копченый	г
+868	лосось свежесоленый	г
+869	лосось свежий	г
+870	лосось свежий филе	г
+871	лосось слабосоленый	г
+872	лосось стейки	г
+873	лосось филе	г
+874	лосось филе на коже	г
+875	лосось холодного копчения	г
+876	лосятина	кг
+877	лук белый	по вкусу
+878	лук зеленый	г
+879	лук красный	по вкусу
+880	лук маринованный	г
+881	луковая шелуха	г
+882	луковый порошок	г
+883	лук-порей	горсть
+884	лук-резанец	по вкусу
+885	лук репчатый	г
+886	лук репчатый мелкий	г
+887	лук салатный	шт.
+888	лук сушеный	г
+889	лук-шалот	г
+890	лук-шалот красный	шт.
+891	льняная мука	г
+892	льняное масло	ч. л.
+893	льняное семя	г
+894	льняное семя молотое	г
+895	любисток	г
+896	маасдам	г
+897	мадера	г
+898	майонез	г
+899	майонез домашний	г
+900	майонез легкий	г
+901	майонезный соус «Слобода» Постный	г
+902	майонез оливковый	г
+903	майонез «Слобода» Легкий	г
+904	майонез «Слобода» На перепелиных яйцах	г
+905	майонез «Слобода» Оливковый	г
+906	майонез «Слобода» Провансаль	г
+907	майонез «Слобода» С лимонным соком	г
+908	майонез «Слобода» Сметанный	г
+909	майоран	г
+910	майоран свежий	по вкусу
+911	майоран сушеный	г
+912	мак	г
+913	макаронные изделия	г
+914	макаронные изделия мелкие	г
+915	макароны	г
+916	макароны-бабочки (farfalle)	г
+917	макароны-бабочки (farfalle) мини	г
+918	макароны баветте	г
+919	макароны-бантики	г
+920	макароны букатини	г
+921	макароны джильи	г
+922	макароны диталони	г
+923	макароны-звездочки	стакан
+924	макароны орзо	г
+925	макароны-ракушки (conchiglie)	г
+926	макароны-ракушки (conchiglie rigate)	г
+927	макароны-ракушки крупные	г
+928	макароны рисони	г
+929	макароны-рожки (pipe rigate)	г
+930	макароны-спиральки (fusilli)	г
+931	макароны-ушки (orecchiette)	г
+932	маккерончини	г
+933	мак молотый	г
+934	маковая масса	пачка
+935	малина	г
+936	малина замороженная	г
+937	малина, протертая с сахаром	стакан
+938	малина сушеная	г
+939	малиновое варенье	г
+940	малиновое желе	г
+941	малиновое пюре	г
+942	малиновый джем	г
+943	малиновый крем	г
+944	малиновый сироп	ч. л.
+945	малиновый соус	ч. л.
+946	малиновый уксус	мл
+947	малиновый чай	г
+948	манго	по вкусу
+949	манговый сироп	мл
+950	манго консервированное	г
+951	мангольд	г
+952	мангустин	шт.
+953	мандариновое пюре	г
+954	мандариновые цукаты	г
+955	мандариновый сок	г
+956	мандарины	по вкусу
+957	мандарины в собственном соку	г
+958	манная крупа	г
+959	маракуйя	г
+960	маргарин	г
+961	маргарин сливочный	г
+962	мармелад	по вкусу
+963	мармелад бутербродный	г
+964	марсала	стакан
+965	мартини	г
+966	мартини красный	г
+967	марципан	по вкусу
+968	марципан зеленый	г
+969	марципан розовый	г
+970	маршмеллоу	г
+971	маршмеллоу крем	г
+972	маршмеллоу мини	г
+973	маскарпоне	г
+974	маслины	г
+975	маслины без косточек	г
+976	масло авокадо	г
+977	масло виноградных косточек	г
+978	масло грецкого ореха	ч. л.
+979	масло для фритюра	г
+980	масло кедрового ореха	г
+981	маслята	г
+982	мастика	г
+983	мастика желатиновая	г
+984	мастика шоколадная	г
+985	матча	г
+986	мафальдине	г
+987	маца	г
+988	мацони	г
+989	маш	г
+990	мед	г
+991	мед акации	г
+992	мед гречишный	г
+993	мед жидкий	г
+994	мед лавандовый	г
+995	мелисса	г
+996	меренги	шт.
+997	мидии	г
+998	мидии в раковинах	г
+999	мидии в раковинах крупные черные	г
+1000	мидии в раковинах мелкие зеленые	г
+1001	мидии замороженные	шт.
+1002	мидии копченые в масле	г
+1003	микрозелень	горсть
+1004	миндаль	г
+1005	миндаль жареный	г
+1006	миндаль измельченный	г
+1007	миндальная масса	г
+1008	миндальная мука	г
+1009	миндальная паста	г
+1010	миндальная эссенция	г
+1011	миндальное масло	г
+1012	миндальное молоко	г
+1013	миндальное печенье	г
+1014	миндальное пралине	г
+1015	миндальные лепестки	г
+1016	миндальный ликер	г
+1017	миндальный сироп	г
+1018	миндальный экстракт	капля
+1019	миндаль очищенный	г
+1020	миндаль рубленый	г
+1021	мини-кукуруза	шт.
+1022	минога	г
+1023	минтай	г
+1024	минтай печень	г
+1025	минтай филе	г
+1026	мисо-паста	г
+1027	мисо-суп	пакет
+1028	можжевельник ягоды	г
+1029	мойва	г
+1030	моллюски	г
+1031	молоко	г
+1032	молоко 0,5%	г
+1033	молоко 1,5%	г
+1034	молоко 2,5%	г
+1035	молоко 3,2%	г
+1036	молоко 3,6%	г
+1037	молоко 4%	г
+1038	молоко 6%	г
+1039	молоко козье	г
+1040	молоко концентрированное	г
+1041	молоко рисовое	мл
+1042	молоко сгущенное	г
+1043	молоко сгущенное вареное	ст. л.
+1044	молоко сгущенное с какао	г
+1045	молоко сухое	г
+1046	молоко сухое обезжиренное	ст. л.
+1047	молоко топленое	г
+1048	молочная смесь	г
+1049	молочные продукты	г
+1050	морепродукты	шт.
+1051	морковное пюре	г
+1052	морковь	г
+1053	морковь вареная	г
+1054	морковь крупная	г
+1055	морковь молодая	г
+1056	морковь по-корейски	г
+1057	морковь тертая	шт.
+1058	мороженое	по вкусу
+1059	мороженое ванильное	г
+1060	мороженое клубничное	г
+1061	мороженое лимонное	по вкусу
+1062	мороженое малиновое	г
+1063	мороженое пломбир	г
+1064	мороженое шоколадное	мл
+1065	морошка	г
+1066	морские гребешки	кг
+1067	морской коктейль	г
+1068	морской коктейль в масле	упаковка
+1069	морской коктейль замороженный	г
+1070	морской черт	г
+1071	морской язык	г
+1072	морской язык филе	г
+1073	мортаделла	г
+1074	моцарелла	г
+1075	моцарелла для запекания	г
+1076	моцарелла для пиццы	г
+1077	моцарелла мини	г
+1078	моцарелла с травами	г
+1079	моцарелла шарик большой	г
+1080	мука	г
+1081	мука 1 сорт	г
+1082	мука 2 сорт	г
+1083	мука «Аладушкин»	г
+1084	мука грубого помола	г
+1085	мука для темпуры	г
+1086	мука из пророщенной пшеницы	ст. л.
+1087	мука манитоба	г
+1088	мука самоподнимающаяся	г
+1089	мука с отрубями	ч. л.
+1090	мука с семечками	г
+1091	мука хлебопекарная	г
+1092	мука цельнозерновая	г
+1093	мускат белый	мл
+1094	мускатное вино	г
+1095	мускатный орех	г
+1096	мускатный орех молотый	г
+1097	мюсли	г
+1098	мягкий творог	г
+1099	мясной бульон	г
+1100	мясной фарш	г
+1101	мясо	г
+1102	мясо дикого кабана	г
+1103	мясо криля	г
+1104	мясо на косточке	кг
+1105	мята	г
+1106	мята сушеная	г
+1107	мятный сироп	г
+1108	мятный шнапс	г
+1109	нардек	г
+1110	нектарины	шт.
+1111	нога ягненка без кости	г
+1112	нори	г
+1113	нуга	г
+1114	нуга с орехами	г
+1115	нут	г
+1116	нутелла	г
+1117	нут консервированный	г
+1118	нутовая мука	г
+1119	облепиха	г
+1120	облепиха замороженная	г
+1121	облепиховый сироп	стакан
+1122	овощи	г
+1123	овощная смесь	г
+1124	овощная смесь замороженная	г
+1125	овощная смесь замороженная для wok	г
+1126	овощная смесь по-китайски	г
+1127	овощной бульон	по вкусу
+1128	овсяная мука	г
+1129	овсяное молоко	стакан
+1130	овсяное печенье	г
+1131	овсяное толокно	г
+1132	овсяные зерна	г
+1133	овсяные отруби	г
+1134	овсяные хлопья	г
+1135	овсяные хлопья быстрого приготовления	г
+1136	огуречный рассол	стакан
+1137	огурцы	г
+1138	огурцы консервированные	шт.
+1139	огурцы малосольные	шт.
+1140	огурцы маринованные	банка
+1141	огурцы свежие	г
+1142	огурцы соленые	г
+1143	одуванчики	г
+1144	окорок	г
+1145	окорок варено-копченый	г
+1146	окунь	г
+1147	окунь красный филе	г
+1148	окунь морской	г
+1149	окунь морской филе	г
+1150	окунь филе	г
+1151	оленина	г
+1152	оливки	г
+1153	оливки без косточек	г
+1154	оливки зеленые	по вкусу
+1155	оливки зеленые консервированные	банка
+1156	оливки каламата	г
+1157	оливки консервированные	г
+1158	оливки, фаршированные анчоусами	г
+1159	оливки черные	по вкусу
+1160	оливковая паста	г
+1161	оливковое масло	г
+1162	оливковое масло Extra Virgin	г
+1163	опунция плоды	г
+1164	опята	по вкусу
+1165	опята замороженные	г
+1166	опята маринованные	г
+1167	орегано	г
+1168	орегано свежий	г
+1169	орегано сушеный	г
+1170	орехи	г
+1171	орехи бразильские	г
+1172	орехи макадамия	г
+1173	орехи пекан	г
+1174	орехи пинии	г
+1175	ореховая крошка	стакан
+1176	ореховая паста	шт.
+1177	ореховое масло	ст. л.
+1178	ореховый ликер	мл
+1179	ореховый соус	ст. л.
+1180	осетр	г
+1181	осетрина холодного копчения	г
+1182	осьминог	г
+1183	осьминоги консервированные	г
+1184	осьминоги мини	г
+1185	отруби	г
+1186	ошеек	г
+1187	пагр	г
+1188	пажитник	г
+1189	пажитник семена	г
+1190	палтус	г
+1191	пальмовое масло	г
+1192	пангасиус	г
+1193	панеттоне	шт.
+1194	Панифарин	г
+1195	панчетта	г
+1196	папайя	г
+1197	папайя консервированная в собственном соку	г
+1198	папоротник	г
+1199	папоротник соленый	упаковка
+1200	паппарделле	г
+1201	паприка	г
+1202	паприка копченая	ст. л.
+1203	паприка красная	ст. л.
+1204	паприка красная молотая	г
+1205	паприка острая копченая	г
+1206	паприка сладкая	г
+1207	паприка сладкая копченая	г
+1208	паприка сладкая хлопьями	ч. л.
+1209	пармезан	г
+1210	паста	г
+1211	паста веджимайт	г
+1212	паста тахини	г
+1213	паста хариса	ст. л.
+1214	пастернак	г
+1215	пастила	г
+1216	пастила виноградная	г
+1217	патиссоны	г
+1218	патока	г
+1219	патока крахмальная	г
+1220	патока черная (меласса)	г
+1221	пахта	г
+1222	паштет	г
+1223	пекарский порошок	г
+1224	пекарский порошок	ч. л.
+1225	пекорино	г
+1226	пектин	г
+1227	пеленгас	г
+1228	пельмени	г
+1229	пенне	г
+1230	пенне ригате	г
+1231	пеперончино	ч. л.
+1232	пеперончино молотый	щепотка
+1233	переводной лист для шоколада	шт.
+1234	перепелки	тушка
+1235	перец	г
+1236	перец белый	г
+1237	перец белый горошком	по вкусу
+1238	перец белый молотый	г
+1239	перец белый свежемолотый	ч. л.
+1240	перец болгарский	г
+1241	перец болгарский желтый	г
+1242	перец болгарский зеленый	г
+1243	перец болгарский красный	г
+1244	перец горошком	г
+1245	перец горошком смесь	г
+1246	перец душистый	щепотка
+1247	перец душистый горошком	г
+1248	перец душистый молотый	г
+1249	перец испанский острый	шт.
+1250	перец кайенский	г
+1251	перец кайенский красный	г
+1252	перец кайенский молотый	щепотка
+1253	перец красный	г
+1254	перец красный горошком	г
+1255	перец красный жгучий	г
+1256	перец красный молотый	г
+1257	перец красный острый	г
+1258	перец красный острый молотый	по вкусу
+1259	перец красный хлопьями	щепотка
+1260	перец лимонный	г
+1261	перец маринованный	г
+1262	перец острый	г
+1263	перец острый зеленый	шт.
+1264	перец острый молотый	щепотка
+1265	перец падрон	г
+1266	перец пеперони	г
+1267	перец пеперони красный	шт.
+1268	перец розовый горошком	г
+1269	перец свежемолотый смесь	г
+1270	перец сенегальский	по вкусу
+1271	перец сладкий	г
+1272	перец сладкий желтый	г
+1273	перец сладкий зеленый	г
+1274	перец сладкий красный	г
+1275	перец сладкий красный маринованный	шт.
+1276	перец сладкий красный молотый	г
+1277	перец сладкий оранжевый	г
+1278	перец сладкий сушеный	г
+1279	перец сычуаньский	г
+1280	перец халапеньо	г
+1281	перец халапеньо маринованный	шт.
+1282	перец черный	ст. л.
+1283	перец черный горошком	по вкусу
+1284	перец черный молотый	г
+1285	перец черный свежемолотый	г
+1286	перец чили	г
+1287	перец чили зеленый	стручок
+1288	перец чили красный	стручок
+1289	перец чили маринованный	по вкусу
+1290	перец чили молотый	г
+1291	перец чили сухой	ст. л.
+1292	перец чили хлопьями	по вкусу
+1293	перец ямайский	г
+1294	перловая крупа	г
+1295	перловая мука	г
+1296	персики	г
+1297	персики консервированные	г
+1298	персики сушеные	горсть
+1299	персиковое пюре	г
+1300	персиковый джем	г
+1301	персиковый мармелад	ст. л.
+1302	персиковый сироп	мл
+1303	персиковый сок	г
+1304	перцовая паста	ч. л.
+1305	петрушка	г
+1306	петрушка зелень	г
+1307	петрушка итальянская	пучок
+1308	петрушка корень	г
+1309	петрушка рубленая	г
+1310	петрушка сушеная	г
+1311	печень	г
+1312	печенье	по вкусу
+1313	печенье Oreo	г
+1314	печенье Амаретти	г
+1315	печенье бисквитное	г
+1316	печенье галетное	шт.
+1317	печенье «Дамские пальчики»	г
+1318	печенье песочное	г
+1319	печенье рассыпчатое	г
+1320	печенье Савоярди	г
+1321	печенье сахарное	г
+1322	печенье сладкое	г
+1323	печенье сухое	г
+1324	печенье шоколадное	г
+1325	печенье Юбилейное молочное	г
+1326	пиво	г
+1327	пиво имбирное	мл
+1328	пиво нефильтрованное	г
+1329	пиво светлое	г
+1330	пиво темное	банка
+1331	пикша	шт.
+1332	питы	по вкусу
+1333	повидло	г
+1334	подсолнечное масло	г
+1335	подсолнечные семечки	г
+1336	полба	г
+1337	полба недозрелая	г
+1338	полента	по вкусу
+1339	полента быстрого приготовления	стакан
+1340	помело	г
+1341	помидоры	г
+1342	помидоры бурые	г
+1343	помидоры вяленые	по вкусу
+1344	помидоры вяленые в масле	г
+1345	помидоры желтые	шт.
+1346	помидоры зеленые	кг
+1347	помидоры консервированные	г
+1348	помидоры консервированные в собственном соку	г
+1349	помидоры консервированные в собственном соку с базиликом	г
+1350	помидоры протертые пассата	г
+1351	помидоры соленые	шт.
+1352	помидоры сушеные хлопьями	г
+1353	помидоры черри	г
+1354	помидоры черри желтые	г
+1355	попкорн	г
+1356	поросенок	кг
+1357	портвейн	г
+1358	портобелло	г
+1359	портулак	г
+1360	посыпка кондитерская	по вкусу
+1361	почки	г
+1362	приправа 4 перца	г
+1363	приправа 5 специй (five spice)	ч. л.
+1364	приправа для баранины	ст. л.
+1365	приправа для картофеля	г
+1366	приправа для курицы	г
+1367	приправа для макарон	по вкусу
+1368	приправа для маринования свинины	по вкусу
+1369	приправа для морепродуктов	по вкусу
+1370	приправа для мяса	г
+1371	приправа для паэльи	по вкусу
+1372	приправа для пиццы	ч. л.
+1373	приправа для плова	г
+1374	приправа для птицы	ст. л.
+1375	приправа для рыбы	г
+1376	приправа для салатов	по вкусу
+1377	приправа заатар	ч. л.
+1378	приправа креольская	ст. л.
+1379	приправа с сушеными грибами	ч. л.
+1380	приправы	г
+1381	прованские травы	г
+1382	проволоне	г
+1383	просекко	мл
+1384	простокваша	г
+1385	протеин сывороточный	г
+1386	прошутто	г
+1387	пряники	г
+1388	пряничные специи	г
+1389	пряности	г
+1390	псиллиум	г
+1391	птитим	г
+1392	пудинг	г
+1393	пудинг ванильный	г
+1394	пудинг ванильный инстант	упаковка
+1395	пудинг карамельный	г
+1396	пшеница	г
+1397	пшеничная крупа	г
+1398	пшеничная мука	г
+1399	пшеничная мука цельнозерновая	г
+1400	пшеничные зародыши	стакан
+1401	пшеничные отруби	г
+1402	пшеничные ростки	г
+1403	пшеничные хлопья	г
+1404	пшенные хлопья	ст. л.
+1405	пшено	г
+1406	пыльца цветочная	г
+1407	пюре	по вкусу
+1408	радиккио	шт.
+1409	разрыхлитель	г
+1410	раки	шт.
+1411	раковые шейки	г
+1650	смесь для кекса	шт.
+1412	раковые шейки в рассоле	г
+1413	рамбутан	г
+1414	рапаны	г
+1415	рапсовое масло	по вкусу
+1416	рассол	г
+1417	рассол от каперсов	ст. л.
+1418	рассол от оливок	ст. л.
+1419	растительное масло	г
+1420	растительное масло для жарки	г
+1421	растительное масло нерафинированное	стакан
+1422	растительное масло рафинированное	г
+1423	растительное молоко	стакан
+1424	ревень	г
+1425	реган	веточка
+1426	редис	г
+1427	редька	г
+1428	редька белая	шт.
+1429	редька зеленая	шт.
+1430	редька черная	шт.
+1431	репа	г
+1432	репа белая	шт.
+1433	ржаная закваска	г
+1434	ржаная закваска густая	г
+1435	ржаная мука	г
+1436	ржаные отруби	г
+1437	ригатони	г
+1438	рикотта	г
+1439	рикотта твердая	г
+1440	рис	г
+1441	рис арборио	г
+1442	рис басмати	г
+1443	рис бурый	г
+1444	рис бурый и дикий смесь	г
+1445	рис вареный	г
+1446	рис виола	г
+1447	рис девзира	г
+1448	рис дикий	г
+1449	рис дикий и золотистый смесь	г
+1450	рис длиннозерный	г
+1451	рис длиннозерный золотистый	г
+1452	рис для плова	г
+1453	рис для пудинга	г
+1454	рис для ризотто	г
+1455	рис для суши	г
+1456	рис жасминовый	г
+1457	рис золотистый	г
+1458	рис индика	г
+1459	рис италика	г
+1460	рис карнароли	г
+1461	рис красный	г
+1462	рис круглозерный	г
+1463	рис кубанский	г
+1464	рисовая бумага	г
+1465	рисовая лапша	г
+1466	рисовая мука	г
+1467	рисовое вино	ч. л.
+1468	рисовые хлопья	г
+1469	рисовые шарики воздушные	г
+1470	рисовый крахмал	ст. л.
+1471	рисовый уксус	по вкусу
+1472	рис пропаренный	г
+1473	рис пропаренный и дикий смесь	г
+1474	рис японика	г
+1475	рожь	г
+1476	розмарин	шт.
+1477	розмарин сушеный	по вкусу
+1478	розовая вода	г
+1479	розовые бутоны сушеные	г
+1480	розовые лепестки	г
+1481	розы	г
+1482	рокфор	г
+1483	ром	бутылка
+1484	ромашка сушеная	г
+1485	ромовый экстракт	ч. л.
+1486	ром темный	г
+1487	ростбиф	г
+1488	рукола	г
+1489	рулька	по вкусу
+1490	рыба	г
+1491	рыба белая	г
+1492	рыба белая филе	г
+1493	рыба консервированная	банка
+1494	рыба копченая	г
+1495	рыба копченая филе	г
+1496	рыба красная	г
+1497	рыба красная соленая	г
+1498	рыба красная филе	г
+1499	рыба-меч	г
+1500	рыба морская	г
+1501	рыба солнечник филе	шт.
+1502	рыба-соль	тушка
+1503	рыбное филе	г
+1504	рыбные консервы	г
+1505	рыбные кости	г
+1506	рыбные обрезки, головы, плавники	по вкусу
+1507	рыбный бульон	г
+1508	рыбный соус	г
+1509	рыбный соус Nam Pla	г
+1510	рыбный соус тайский	г
+1511	рыбный фарш	г
+1512	рябина черноплодная	г
+1513	рябчик	г
+1514	ряженка	г
+1515	ряженка 4%	г
+1516	сайда	г
+1517	сайда филе	г
+1518	сайра	г
+1519	сайра консервированная	банка
+1520	саке	ст. л.
+1521	салака	г
+1522	салат	г
+1523	салат айсберг	г
+1524	салат китайский	г
+1525	салат корн	пучок
+1526	салат кочанный	г
+1527	салат кучерявый	г
+1528	салат листовой	г
+1529	салатный микс	г
+1530	салат романо	г
+1531	салат фриссе	г
+1532	сало	г
+1533	сало копченое в перце	г
+1651	смесь для оладий	г
+1534	сало копченое с мясными прослойками	г
+1535	сало с мясными прослойками	г
+1536	сальник	г
+1537	сальса	г
+1538	сальса верде	ч. л.
+1539	салями	г
+1540	салями итальянская	г
+1541	сардельки	г
+1542	сардельки копченые	г
+1543	сардинки маленькие	шт.
+1544	сардины	г
+1545	сардины в масле	банка
+1546	сахар	г
+1547	сахар ванильный	г
+1548	сахар демерара	г
+1549	сахар жемчужный	г
+1550	сахар коричневый	г
+1551	сахар коричневый крупнокристаллический	г
+1552	сахар мусковадо	горсть
+1553	сахарная пудра	г
+1554	сахарная пудра апельсиновая	г
+1555	сахарная пудра ванильная	г
+1556	сахарные жемчужинки	г
+1557	сахарные кондитерские украшения	горсть
+1558	сахарный песок	г
+1559	сахарный песок крупный	г
+1560	сахарный песок мелкий	г
+1561	сахарный сироп	г
+1562	сахар пальмовый	г
+1563	сахар-рафинад	г
+1564	сахар-рафинад с корицей	г
+1565	сахар тростниковый	г
+1566	сванская соль	г
+1567	свекла	г
+1568	свекла вареная	г
+1569	свекольная ботва	г
+1570	свекольные листья	г
+1571	свиная вырезка	г
+1572	свиная голова	г
+1573	свиная грудинка	г
+1574	свиная корейка	г
+1575	свиная корейка копченая	г
+1576	свиная корейка на кости	г
+1577	свиная лопатка варено-копченая	г
+1578	свиная мякоть	г
+1579	свиная пашина	кг
+1580	свиная печень	г
+1581	свиная рулька	по вкусу
+1582	свиная рулька варено-копченая	г
+1583	свиная рулька копченая	г
+1584	свиная шейка	кусок
+1585	свинина	г
+1586	свинина вареная	г
+1587	свинина нежирная	г
+1588	свинина с жирком	г
+1589	свиное сердце	г
+1590	свиное филе	г
+1591	свиной подчеревок	г
+1592	свиной фарш	г
+1593	свиной язык	г
+1594	свиные котлеты на косточке	шт.
+1595	свиные легкие	г
+1596	свиные ножки	г
+1597	свиные отбивные	г
+1598	свиные отбивные на косточке	г
+1599	свиные ребра	г
+1600	свиные уши	шт.
+1601	свиные щечки	шт.
+1602	свити	г
+1603	сельдерей	г
+1604	сельдерей зелень	г
+1605	сельдерей корень	г
+1606	сельдерей корень сушеный	по вкусу
+1607	сельдерейная соль	г
+1608	сельдерей семена	ч. л.
+1609	сельдерей стебли	г
+1610	сельдь	г
+1611	сельдь слабосоленая	г
+1612	сельдь соленая	шт.
+1613	сельдь филе	г
+1614	семга	г
+1615	семга копченая	г
+1616	семга свежая	г
+1617	семга соленая	г
+1618	семга филе на коже	г
+1619	семечки	г
+1620	семечки смесь	ст. л.
+1621	семолина	г
+1622	сервелат варено-копченый	г
+1623	сибас	г
+1624	сидр	г
+1625	сироп	г
+1626	сироп от консервированных груш	г
+1627	сироп от консервированных персиков	ст. л.
+1628	сироп топинамбура	стакан
+1629	скумбрия	по вкусу
+1630	скумбрия свежая	г
+1631	скумбрия филе	г
+1632	скумбрия холодного копчения	г
+1633	сливки	упаковка
+1634	сливки 10-20%	г
+1635	сливки 15%	г
+1636	сливки 20%	г
+1637	сливки 33-35%	г
+1638	сливки жирные	г
+1639	сливки кондитерские	г
+1640	сливовая паста	г
+1641	сливовое варенье	г
+1642	сливовое вино	г
+1643	сливовый джем	г
+1644	сливовый ликер	ст. л.
+1645	сливовый соус	г
+1646	сливочное масло	г
+1647	сливы	кг
+1648	сливы замороженные	г
+1649	смалец	г
+1652	смесь для хлеба 8 злаков	г
+1653	сметана	г
+1654	сметана 10%	г
+1655	сметана 15%	ч. л.
+1656	сметана 18%	г
+1657	сметана 20%	г
+1658	сметана 25%	г
+1659	сметана 30%	г
+1660	сметана 35%	г
+1661	сметана жирная	г
+1662	сметана нежирная	г
+1663	сметана некислая	г
+1664	смородина сушеная	г
+1665	смородиновые листья	г
+1666	сморчки сухие	г
+1667	снежок	л
+1668	сныть	г
+1669	сода	г
+1670	соевая мука	г
+1671	соевое масло	г
+1672	соевое молоко	г
+1673	соевые ростки	г
+1674	соевый соус	г
+1675	сок	г
+1676	сок из красных апельсинов	мл
+1677	сок мультивитаминный	мл
+1678	сок юзу	мл
+1679	солод	ч. л.
+1680	солод жидкий	г
+1681	солодовый экстракт	г
+1682	солод темный	г
+1683	соломка	г
+1684	соль	г
+1685	соль гималайская	г
+1686	соль крупного помола	г
+1687	соль морская	г
+1688	сом филе	г
+1689	сосиски	г
+1690	сосиски из куриного фарша	шт.
+1691	сосиски копченые	г
+1692	соус	г
+1693	соус black bean	ст. л.
+1694	соус sambal oelek	ч. л.
+1695	соус барбекю	г
+1696	соус краснодарский	г
+1697	соус красный острый	г
+1698	соус мирин	по вкусу
+1699	соус наршараб	г
+1700	соус острый	г
+1701	соус песто	по вкусу
+1702	соус сацебели	г
+1703	соус табаско	капля
+1704	соус терияки	г
+1705	соус ткемали	стакан
+1706	соус ткемали благородный	г
+1707	соус ткемали ранний	ст. л.
+1708	соус устричный	ч. л.
+1709	соус чили	г
+1710	соус чили сладкий	ч. л.
+1711	соус экзотический	г
+1712	соя	г
+1713	спагетти	г
+1714	спагетти № 3	г
+1715	спагетти № 5	г
+1716	спагетти лунги	г
+1717	спаржа	кг
+1718	спаржа белая	г
+1719	спаржа зеленая	г
+1720	спаржа молодая	г
+1721	спек	г
+1722	спельта	стакан
+1723	спельтовая (полбяная) мука	г
+1724	специи	г
+1725	спирт	г
+1726	спирулина порошок	г
+1727	спред	г
+1728	ставрида	г
+1729	стейк семги	шт.
+1730	стейк семги	г
+1731	стеклянная лапша	г
+1732	страчателла	г
+1733	судак	г
+1734	судак филе	г
+1735	судак филе на коже	г
+1736	сулугуни	г
+1737	сулугуни копченый	г
+1738	сумах	г
+1739	суповой набор	г
+1740	сухари	по вкусу
+1741	сухари белые	г
+1742	сухари молотые	г
+1743	сухари панировочные	г
+1744	сухари ржаные	г
+1745	сухарная крошка	г
+1746	сухофрукты	г
+1747	сухофрукты тропические	по вкусу
+1748	сушки	г
+1749	сыворотка	г
+1750	сыр	г
+1751	сыр tete de moine	г
+1752	сыр Австрия блю	г
+1753	сыр адыгейский	г
+1754	сыр бри	г
+1755	сыр буко	г
+1756	сыр гауда	г
+1757	сыр гойя	г
+1758	сыр голландский	г
+1759	сыр голубой	г
+1760	сыр гравьера	г
+1761	сыр джугас	г
+1762	сыр домашний	г
+1763	сыр дорблю	г
+1764	сыр имеретинский	г
+1765	сыр кефалотири	г
+1766	сырки творожные	г
+1767	сыр козий мягкий	г
+1768	сыр козий твердый	г
+1769	сыр колбасный	г
+1770	сыр копченый	г
+1771	сыр коттедж	г
+1772	сыр Маскарпоне	г
+1773	сыр мраморный	г
+1774	сыр мягкий	по вкусу
+1775	сыр овечий	г
+1776	сыр панир	г
+1777	сыр пеше миньон	г
+1778	сыр плавленый	г
+1779	сыр плавленый шоколадный	г
+1780	сыр пластинками	г
+1781	сыр полутвердый	г
+1782	сыр провола	г
+1783	сыр российский	г
+1784	сыр скаморца	г
+1785	сыр скаморца копченый	г
+1786	сыр сливочный	г
+1787	сыр с плесенью	г
+1788	сыр с плесенью мягкий	г
+1789	сыр твердый	г
+1790	сыр филадельфия	г
+1791	сыр фонтина	г
+1792	сыр хаварти	г
+1793	сыр швейцарский	г
+1794	сычужный фермент	ч. л.
+1795	таледжо	г
+1796	тальолини	г
+1797	тальятелле	г
+1798	тальятелле-гнезда	шт.
+1799	тамаринд	шт.
+1800	тамариндовая паста	ч. л.
+1801	тапиока	г
+1802	тарталетки	по вкусу
+1803	тартар	ст. л.
+1804	тархун	г
+1805	творог	г
+1806	творог 18%	г
+1807	творог 2%	г
+1808	творог 5%	г
+1809	творог 9%	г
+1810	творог жирный	г
+1811	творог зерненый	г
+1812	творог обезжиренный	г
+1813	творожная масса	г
+1814	творожная паста	г
+1815	творожный сыр	г
+1816	творожный сыр соленый	г
+1817	творожок клубничный	г
+1818	текила	стакан
+1819	телятина	по вкусу
+1820	телятина вареная	г
+1821	телячий фарш	г
+1822	телячьи отбивные на косточке	шт.
+1823	телячьи шницели	шт.
+1824	телячьи эскалопы	г
+1825	телячья вырезка	г
+1826	телячья печень	г
+1827	телячья щека	шт.
+1828	тесто бездрожжевое	г
+1829	тесто готовое	г
+1830	тесто для вонтонов	г
+1831	тесто для пиццы	шт.
+1832	тесто дрожжевое	по вкусу
+1833	тесто катаифи	г
+1834	тесто макаронное	г
+1835	тесто макаронное для лазаньи	г
+1836	тесто пельменное	г
+1837	тесто песочное	по вкусу
+1838	тесто пресное	г
+1839	тесто пряничное	г
+1840	тесто слоеное	г
+1841	тесто слоеное бездрожжевое	по вкусу
+1842	тесто слоеное дрожжевое	кг
+1843	тесто фило	г
+1844	тилапия	г
+1845	тилапия филе	г
+1846	тильзитер	г
+1847	тимьян	горсть
+1848	тимьян лимонный	веточка
+1849	тимьян свежий	по вкусу
+1850	тимьян сушеный	г
+1851	ткемали	г
+1852	тмин	г
+1853	тмин молотый	г
+1854	томатная паста	г
+1855	томатное пюре	г
+1856	томатный концентрат	г
+1857	томатный порошок	г
+1858	томатный сок	г
+1859	томатный соус	г
+1860	томатный соус итальянский	г
+1861	томатный соус острый	г
+1862	томатный соус с базиликом	г
+1863	тоник	бутылка
+1864	топинамбур	г
+1865	топленое масло	г
+1866	тортильи	по вкусу
+1867	тортильони	г
+1868	тофу	г
+1869	травы ароматные	г
+1870	травы пряные с перцем	ч. л.
+1871	травы сухие	г
+1872	треска	г
+1873	треска печень	г
+1874	треска филе	г
+1875	трюфель	г
+1876	трюфельная крошка	г
+1877	трюфельное масло	ст. л.
+1878	трюфель черный	шт.
+1879	тунец	по вкусу
+1880	тунец консервированный	г
+1881	тунец филе	г
+1882	тушенка	г
+1883	тыква	г
+1884	тыквенное масло	шт.
+1885	тыквенное пюре	г
+1886	тыквенные семечки	г
+1887	тюлька свежая	г
+1888	угорь	г
+1889	угорь копченый	г
+1890	угурт	г
+1891	укроп	г
+1892	укропное семя	ч. л.
+1893	укроп свежий	г
+1894	укроп сушеный	г
+1895	уксус	г
+1896	уксус 9%	г
+1897	уксус из сидра	ст. л.
+1898	уксусная эссенция	г
+1899	уксус столовый	г
+1900	улитки	г
+1901	улитки виноградные	шт.
+1902	урюк	г
+1903	устрицы	г
+1904	утиная грудка	г
+1905	утиная печень	г
+1906	утиное филе	г
+1907	утиные бедрышки	г
+1908	утиные ножки	по вкусу
+1909	утка	по вкусу
+1910	утка печеная	г
+1911	утка тушка	тушка
+1912	уцхо-сунели	г
+1913	фазан	г
+1914	фарш (баранина и говядина)	г
+1915	фарш (свинина и курица)	г
+1916	фасоль	г
+1917	фасоль белая	г
+1918	фасоль белая консервированная	г
+1919	фасоль белая лима	г
+1920	фасоль зеленая стручковая	г
+1921	фасоль кенийская	горсть
+1922	фасоль кидни красная	г
+1923	фасоль консервированная	г
+1924	фасоль красная	г
+1925	фасоль красная вареная	стакан
+1926	фасоль красная консервированная	г
+1927	фасоль молодая замороженная	г
+1928	фасоль пинто	г
+1929	фасоль спаржевая вареная	г
+1930	фасоль стручковая	г
+1931	фасоль стручковая замороженная	г
+1932	фасоль стручковая консервированная	г
+1933	фасоль черный глаз	г
+1934	фейхоа	г
+1935	фенхель	г
+1936	фенхель семена	г
+1937	фенхель семена молотые	г
+1938	фестонате	г
+1939	фета	г
+1940	фетаки	г
+1941	фетакса	г
+1942	феттучине	г
+1943	фиалки засахаренные	шт.
+1944	фиалковый сироп	г
+1945	физалис	по вкусу
+1946	филе красного окуня	шт.
+1947	филе лосося	г
+1948	филе палтуса	шт.
+1949	финики	г
+1950	финики без косточек	стакан
+1951	финики иранские	г
+1952	финики иранские без косточек	шт.
+1953	фисташки	г
+1954	фисташки очищенные	г
+1955	фисташки очищенные несоленые	горсть
+1956	фисташки рубленые	г
+1957	фисташковая мука	г
+1958	фисташковая паста	г
+1959	фисташковое масло	г
+1960	фокачча	по вкусу
+1961	форель	г
+1962	форель вареная	г
+1963	форель горячего копчения	г
+1964	форель озерная свежая	шт.
+1965	форель слабосоленая	г
+1966	форель стейки	шт.
+1967	форель филе	г
+1968	форель холодного копчения	г
+1969	фрикадельки	г
+1970	фрукт дракона	шт.
+1971	фруктовый сироп	г
+1972	фруктовый сок	г
+1973	фруктовый сок без сахара	стакан
+1974	фруктоза	г
+1975	фрукты	г
+1976	фрукты консервированные	г
+1977	фундук	г
+1978	фундучная мука	г
+1979	фунчоза	г
+1980	халва	г
+1981	халва ванильная	г
+1982	халва подсолнечная	г
+1983	халуми	г
+1984	хамон	г
+1985	хек	г
+1986	хек филе	г
+1987	херес	стакан
+1988	хересный уксус	ч. л.
+1989	хлеб	г
+1990	хлеб 7 злаков	батон
+1991	хлеб белый	г
+1992	хлеб белый сухой	г
+1993	хлеб бородинский	кусок
+1994	хлеб датский ржаной	г
+1995	хлеб для сэндвичей	г
+1996	хлебная крошка	г
+1997	хлеб ржаной	г
+1998	хлеб серый	г
+1999	хлеб с кунжутом	кусок
+2000	хлеб цельнозерновой	г
+2001	хлебцы пшенично-ржаные цельнозерновые	г
+2002	хлопья 4 злака	г
+2003	хлопья 5 злаков	г
+2004	хлопья 7 злаков	ст. л.
+2005	хлопья быстрого приготовления	стакан
+2006	хлорид кальция	г
+2007	хмели-сунели	г
+2008	хмель	ст. л.
+2009	хрен	г
+2010	хрен протертый	г
+2011	хрен со сливками	г
+2012	хурма	г
+2013	хурма спелая	г
+2014	цесарка тушка	г
+2015	цикорий	ч. л.
+2016	цитроновые цукаты	горсть
+2017	цитрусовые цукаты	шт.
+2018	цитрусовый свежевыжатый сок	мл
+2019	цукаты	г
+2020	цукини	г
+2021	цукини цветы	шт.
+2022	цыплята	г
+2023	цыплята-корнишоны	шт.
+2024	чабер	г
+2025	чабрец	г
+2026	чабрец сушеный	г
+2027	чай дарджилинг	пакетик
+2028	чай жасминовый	ст. л.
+2029	чай зеленый	пакетик
+2030	чай копченый лапсанг сушонг	г
+2031	чай красный	г
+2032	чай ройбуш	ст. л.
+2033	чай черный	г
+2034	чай черный крупнолистовой	ч. л.
+2035	чай черный со специями	пакет
+2036	чай эрл грей	стакан
+2037	чатни манго	г
+2038	чеддер	г
+2039	черемуха	г
+2040	черемуховая мука	г
+2041	черемша	г
+2042	черешневый джем	г
+2043	черешня	г
+2044	черешня консервированная без косточек	ст. л.
+2045	черная смородина	г
+2046	черника	г
+2047	черника замороженная	г
+2048	чернила каракатицы	г
+2049	черничный джем	стакан
+2050	чернослив	г
+2051	чернослив без косточек	г
+2052	чернослив вяленый	г
+2053	чернослив копченый без косточек	г
+2054	черносмородиновое варенье	г
+2055	черносмородиновый джем	г
+2056	чеснок	г
+2057	чеснок молодой	г
+2058	чеснок сушеный	г
+2059	чесночная соль	щепотка
+2060	чесночное масло	по вкусу
+2061	чесночный порошок	г
+2062	чечевица	г
+2063	чечевица вареная	ст. л.
+2064	чечевица зеленая	г
+2065	чечевица красная	г
+2066	чечил спагетти	г
+2067	чиабатта	кусок
+2068	чиа семена	г
+2069	чипотле молотый	щепотка
+2070	чипсы	г
+2071	чоризо	г
+2072	шалфей	г
+2073	шалфей свежий	пучок
+2074	шалфей сушеный	лист
+2075	шампанское	г
+2076	шампанское советское	стакан
+2077	шампанское сухое	ст. л.
+2078	шампиньоны	по вкусу
+2079	шампиньоны замороженные	г
+2080	шампиньоны консервированные	г
+2081	шампиньоны маринованные	г
+2082	шампиньоны свежие	г
+2083	шафран	г
+2084	шафран имеретинский	г
+2085	шафран молотый	ч. л.
+2086	шафран нити	шт.
+2087	шелковица	г
+2088	шелковица сушеная	г
+2089	шиповник	г
+2090	шиповниковый сироп	г
+2091	шнапс	г
+2092	шнитт-лук	стебель
+2093	шоколад	г
+2094	шоколад белый	г
+2095	шоколад горький с апельсиновой цедрой	г
+2096	шоколад молочный	г
+2097	шоколад мятный	г
+2098	шоколадная паста	г
+2099	шоколадная стружка	г
+2100	шоколадное масло	г
+2101	шоколадно-ореховая паста	г
+2102	шоколадные горошины	г
+2103	шоколадные капли	г
+2104	шоколадные капли белые	г
+2105	шоколадные конфеты	г
+2106	шоколадные хлопья	г
+2107	шоколадные шарики из готовых завтраков	горсть
+2108	шоколадный ликер	г
+2109	шоколадный сироп	г
+2110	шоколадный соус	г
+2111	шоколад полусладкий	г
+2112	шоколад с орехами	г
+2113	шоколад черный горький	г
+2114	шоколад черный горький 70%	г
+2115	шоколад черный горький 75%	ч. л.
+2116	шоколад черный горький 85%	г
+2117	шортенинг	стакан
+2118	шпик	шт.
+2119	шпик копченый	г
+2120	шпинат	г
+2121	шпинат замороженный	г
+2122	шпинат молодой	г
+2123	шпинат свежий	г
+2124	шпроты	г
+2125	шпроты в масле	г
+2126	шрот	г
+2127	щавель замороженный	г
+2128	щавель свежий	веточка
+2129	щука	г
+2130	щука филе	г
+2131	эгг-ног	стакан
+2132	эдам	г
+2133	эль	мл
+2134	эмменталь	г
+2135	эскалоп	г
+2136	эстрагон	г
+2137	эстрагон сушеный	веточка
+2138	яблоки	г
+2139	яблоки антоновка	кг
+2140	яблоки гала	г
+2141	яблоки голден	г
+2142	яблоки гренни смит	кг
+2143	яблоки зеленые	г
+2144	яблоки красные	шт.
+2145	яблоки моченые	шт.
+2146	яблоки нетвердых сортов	г
+2147	яблоки сладкие	г
+2148	яблоки сушеные	г
+2149	яблочная эссенция	ч. л.
+2150	яблочное варенье	г
+2151	яблочное повидло	г
+2152	яблочное пюре	г
+2153	яблочные чипсы	стакан
+2154	яблочный джем	г
+2155	яблочный сироп	ст. л.
+2156	яблочный сок	г
+2157	яблочный соус	ст. л.
+2158	яблочный уксус	г
+2159	ягнятина	г
+2160	ягнятина кострец	г
+2161	ягнятина фарш	г
+2162	ягнячьи отбивные на косточке	шт.
+2163	ягнячья голень нарубленная	г
+2164	ягнячья корейка	г
+2165	ягодное варенье	ст. л.
+2166	ягодное желе	г
+2167	ягодный сироп	г
+2168	ягодный сок	г
+2169	ягодный соус кислый	г
+2170	ягоды	г
+2171	ягоды вяленые	по вкусу
+2172	ягоды замороженные	г
+2173	ягоды лесные	г
+2174	ягоды лесные замороженные	г
+2175	яичные белки	г
+2176	яичные желтки	г
+2177	яичные желтки вареные	шт.
+2178	яичные желтки крупные	г
+2179	яичный меланж	г
+2180	яичный порошок	ст. л.
+2181	яйца куриные	г
+2182	яйца куриные крупные	г
+2183	яйца перепелиные	г
+2184	японская крошка панко	г
+2185	ячменные хлопья	г
+2186	ячмень	г
+2187	ячневая крупа	г
+\.
+
+
+--
+-- Data for Name: recipes_recipe; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_recipe (id, name, text, cooking_time, image, author_id) FROM stdin;
+62	string	string	1	recipes/temp_ULGFQLV.png	3
+63	Салат из свеклы и рукколы	Свеклу, рукколу и козий сыр смешать, залить маслом и бальзамиком	10	recipes/temp_nvqaBnn.jpg	5
+64	яичница	Жарить до готовности. Солить по вкусу	10	recipes/temp.jpeg	1
+59	Macaroni alla squadra	макароны варить, фарш жарить. Смешать, но не взбалтывать	20		5
+\.
+
+
+--
+-- Data for Name: recipes_recipe_tags; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_recipe_tags (id, recipe_id, tag_id) FROM stdin;
+80	59	2
+81	59	4
+88	62	1
+89	62	2
+94	63	1
+95	63	2
+96	64	1
+97	64	2
+98	64	3
+99	64	4
+\.
+
+
+--
+-- Data for Name: recipes_shoplist; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_shoplist (id, recipe_id, user_id) FROM stdin;
+6	62	3
+7	63	1
+8	62	1
+10	64	1
+11	62	9
+\.
+
+
+--
+-- Data for Name: recipes_tag; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.recipes_tag (id, name, color, slug) FROM stdin;
+1	Dinner	#8B0000	dinner
+2	Breakfast	#ADFF2F	breakfast
+3	Lunch	#CD5C5C	lunch
+4	Five O'clock	#00FFFF	five-o-clock
+\.
+
+
+--
+-- Data for Name: users_follow; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.users_follow (id, author_id, user_id) FROM stdin;
+1	1	3
+2	2	3
+4	4	3
+14	5	3
+15	6	3
+17	8	3
+18	7	3
+23	5	1
+24	3	1
+\.
+
+
+--
+-- Data for Name: users_usercustomized; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.users_usercustomized (id, last_login, is_superuser, is_staff, is_active, date_joined, username, email, first_name, last_name, password, role) FROM stdin;
+2	\N	f	f	t	2023-04-15 19:44:11.071821+03	user2	user2@user.com			pbkdf2_sha256$150000$CpjQN1dRWrgt$W1cE6vto5P64XK4jpQ5q05leWGBIdvdCkWkfYMmJC2o=	user
+4	\N	f	f	t	2023-04-15 19:46:35.132263+03	user4	user4@user.com			pbkdf2_sha256$150000$R46CDEtiI3Ya$haZ0RqWIHsdoqHbCXeizHN35iHoEM2SqUpA1Xwtshvc=	user
+6	\N	f	f	t	2023-04-15 23:28:18.666673+03	user6	user6@user.com			pbkdf2_sha256$150000$AMSJdh9culyZ$PNxULv9ZvRSl4pe5GND85CsIku4vCo3kKh1DQ1a8xYA=	user
+7	\N	f	f	t	2023-04-17 23:50:10.537586+03	user9	user9@list.ru	max	max	pbkdf2_sha256$150000$yj4NAaFHmmVr$NC55EBtC15GQDS5yIEGGbeKSG1fIJwBJY+A9xw8He5o=	user
+8	\N	f	f	t	2023-04-17 23:50:54.24329+03	user8	user8@list.ru	max	max	pbkdf2_sha256$150000$IYSB5hFqyvi9$Pg77bvbZusVWlkYznfkU+0FrPJ6qR+5Qz8qaAIgNGAM=	user
+3	2023-04-18 13:20:44.411007+03	f	f	t	2023-04-15 19:45:21.106381+03	user3	user3@user.com			pbkdf2_sha256$150000$ddNN2KIk0ZlC$w8/qM5xlpQ1kdtnzqSeQSMdQGjrlQ0BhKPRAmrgSJT4=	user
+5	2023-05-01 09:09:34.571843+03	t	t	t	2023-04-15 22:59:13.814819+03	milmax	milmax@list.ru			pbkdf2_sha256$150000$Pq8wHRbBLnXo$SDwyPGz5/i5baQEvNfImF0+iIk0yLVww/KW/yB8vLv4=	user
+1	2023-05-01 18:08:10.185153+03	f	f	t	2023-04-15 18:22:39.096001+03	user1	user@user.com			pbkdf2_sha256$150000$vrP3KazUZfJx$wGvRhWc7WguM2P3UWb2SqWP1cSOatEFalnSM19TWYgQ=	user
+9	2023-05-04 18:06:35.15816+03	f	f	t	2023-05-04 18:06:18.586926+03	Vapu	vapu@vapu.com	Vasya	Pupkin	pbkdf2_sha256$150000$Hj5pXR2p7Rte$KDzkNc15w0gIpYcm/rmVff4Gukt7f5WtO/Rcw5TlRtU=	user
+\.
+
+
+--
+-- Data for Name: users_usercustomized_groups; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.users_usercustomized_groups (id, usercustomized_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_usercustomized_user_permissions; Type: TABLE DATA; Schema: public; Owner: foodgram_user
+--
+
+COPY public.users_usercustomized_user_permissions (id, usercustomized_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 64, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 49, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 16, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 41, true);
+
+
+--
+-- Name: recipes_favourites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_favourites_id_seq', 10, true);
+
+
+--
+-- Name: recipes_ingredientinrecipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_ingredientinrecipe_id_seq', 53, true);
+
+
+--
+-- Name: recipes_ingredients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_ingredients_id_seq', 2187, true);
+
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_recipe_id_seq', 64, true);
+
+
+--
+-- Name: recipes_recipe_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_recipe_tag_id_seq', 99, true);
+
+
+--
+-- Name: recipes_shoplist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_shoplist_id_seq', 11, true);
+
+
+--
+-- Name: recipes_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.recipes_tag_id_seq', 4, true);
+
+
+--
+-- Name: users_follow_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.users_follow_id_seq', 24, true);
+
+
+--
+-- Name: users_usercustomized_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.users_usercustomized_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_usercustomized_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.users_usercustomized_id_seq', 9, true);
+
+
+--
+-- Name: users_usercustomized_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: foodgram_user
+--
+
+SELECT pg_catalog.setval('public.users_usercustomized_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: authtoken_token authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: recipes_favourites recipes_favourites_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_favourites
+    ADD CONSTRAINT recipes_favourites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_ingredientinrecipe recipes_ingredientinrecipe_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredientinrecipe
+    ADD CONSTRAINT recipes_ingredientinrecipe_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_ingredients recipes_ingredients_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredients
+    ADD CONSTRAINT recipes_ingredients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe recipes_recipe_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe
+    ADD CONSTRAINT recipes_recipe_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tag_recipe_id_tag_id_0b9bf8e3_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tag_recipe_id_tag_id_0b9bf8e3_uniq UNIQUE (recipe_id, tag_id);
+
+
+--
+-- Name: recipes_shoplist recipes_shoplist_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_shoplist
+    ADD CONSTRAINT recipes_shoplist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_tag recipes_tag_color_80798f0a_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_color_80798f0a_uniq UNIQUE (color);
+
+
+--
+-- Name: recipes_tag recipes_tag_name_fdbc724f_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_name_fdbc724f_uniq UNIQUE (name);
+
+
+--
+-- Name: recipes_tag recipes_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipes_tag recipes_tag_slug_key; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_tag
+    ADD CONSTRAINT recipes_tag_slug_key UNIQUE (slug);
+
+
+--
+-- Name: users_follow unique_following; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT unique_following UNIQUE (user_id, author_id);
+
+
+--
+-- Name: recipes_ingredientinrecipe unique_ingredient; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredientinrecipe
+    ADD CONSTRAINT unique_ingredient UNIQUE (recipe_id, ingredient_id);
+
+
+--
+-- Name: recipes_shoplist unique_user_list; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_shoplist
+    ADD CONSTRAINT unique_user_list UNIQUE (user_id, recipe_id);
+
+
+--
+-- Name: recipes_favourites unique_user_recipe; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_favourites
+    ADD CONSTRAINT unique_user_recipe UNIQUE (user_id, recipe_id);
+
+
+--
+-- Name: users_follow users_follow_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_usercustomized users_usercustomized_email_key; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized
+    ADD CONSTRAINT users_usercustomized_email_key UNIQUE (email);
+
+
+--
+-- Name: users_usercustomized_groups users_usercustomized_gro_usercustomized_id_group__d0dc2eb5_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_groups
+    ADD CONSTRAINT users_usercustomized_gro_usercustomized_id_group__d0dc2eb5_uniq UNIQUE (usercustomized_id, group_id);
+
+
+--
+-- Name: users_usercustomized_groups users_usercustomized_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_groups
+    ADD CONSTRAINT users_usercustomized_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_usercustomized users_usercustomized_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized
+    ADD CONSTRAINT users_usercustomized_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_usercustomized_user_permissions users_usercustomized_use_usercustomized_id_permis_824b6296_uniq; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_user_permissions
+    ADD CONSTRAINT users_usercustomized_use_usercustomized_id_permis_824b6296_uniq UNIQUE (usercustomized_id, permission_id);
+
+
+--
+-- Name: users_usercustomized_user_permissions users_usercustomized_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_user_permissions
+    ADD CONSTRAINT users_usercustomized_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_usercustomized users_usercustomized_username_key; Type: CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized
+    ADD CONSTRAINT users_usercustomized_username_key UNIQUE (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX authtoken_token_key_10f0b77e_like ON public.authtoken_token USING btree (key varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: recipes_favourites_recipe_id_a227939c; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_favourites_recipe_id_a227939c ON public.recipes_favourites USING btree (recipe_id);
+
+
+--
+-- Name: recipes_favourites_user_id_b1bf2bb1; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_favourites_user_id_b1bf2bb1 ON public.recipes_favourites USING btree (user_id);
+
+
+--
+-- Name: recipes_ingredientinrecipe_ingredient_id_1024154f; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_ingredientinrecipe_ingredient_id_1024154f ON public.recipes_ingredientinrecipe USING btree (ingredient_id);
+
+
+--
+-- Name: recipes_ingredientinrecipe_recipe_id_6c13856c; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_ingredientinrecipe_recipe_id_6c13856c ON public.recipes_ingredientinrecipe USING btree (recipe_id);
+
+
+--
+-- Name: recipes_recipe_author_id_7274f74b; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_recipe_author_id_7274f74b ON public.recipes_recipe USING btree (author_id);
+
+
+--
+-- Name: recipes_recipe_tag_recipe_id_ef302a8f; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_recipe_tag_recipe_id_ef302a8f ON public.recipes_recipe_tags USING btree (recipe_id);
+
+
+--
+-- Name: recipes_recipe_tag_tag_id_1cb8a8b5; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_recipe_tag_tag_id_1cb8a8b5 ON public.recipes_recipe_tags USING btree (tag_id);
+
+
+--
+-- Name: recipes_shoplist_recipe_id_12018b65; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_shoplist_recipe_id_12018b65 ON public.recipes_shoplist USING btree (recipe_id);
+
+
+--
+-- Name: recipes_shoplist_user_id_f3efdb55; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_shoplist_user_id_f3efdb55 ON public.recipes_shoplist USING btree (user_id);
+
+
+--
+-- Name: recipes_tag_color_80798f0a_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_tag_color_80798f0a_like ON public.recipes_tag USING btree (color varchar_pattern_ops);
+
+
+--
+-- Name: recipes_tag_name_fdbc724f_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_tag_name_fdbc724f_like ON public.recipes_tag USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: recipes_tag_slug_baa21000_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX recipes_tag_slug_baa21000_like ON public.recipes_tag USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: users_follow_author_id_c48003a4; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_follow_author_id_c48003a4 ON public.users_follow USING btree (author_id);
+
+
+--
+-- Name: users_follow_user_id_e66dc3cf; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_follow_user_id_e66dc3cf ON public.users_follow USING btree (user_id);
+
+
+--
+-- Name: users_usercustomized_email_842266b0_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_email_842266b0_like ON public.users_usercustomized USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: users_usercustomized_groups_group_id_530ebb66; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_groups_group_id_530ebb66 ON public.users_usercustomized_groups USING btree (group_id);
+
+
+--
+-- Name: users_usercustomized_groups_usercustomized_id_0bdc40cf; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_groups_usercustomized_id_0bdc40cf ON public.users_usercustomized_groups USING btree (usercustomized_id);
+
+
+--
+-- Name: users_usercustomized_user__usercustomized_id_3093cee8; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_user__usercustomized_id_3093cee8 ON public.users_usercustomized_user_permissions USING btree (usercustomized_id);
+
+
+--
+-- Name: users_usercustomized_user_permissions_permission_id_88b8f810; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_user_permissions_permission_id_88b8f810 ON public.users_usercustomized_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_usercustomized_username_b35d5871_like; Type: INDEX; Schema: public; Owner: foodgram_user
+--
+
+CREATE INDEX users_usercustomized_username_b35d5871_like ON public.users_usercustomized USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_35299eff_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_35299eff_fk_users_usercustomized_id FOREIGN KEY (user_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_usercustomized_id FOREIGN KEY (user_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_favourites recipes_favourites_recipe_id_a227939c_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_favourites
+    ADD CONSTRAINT recipes_favourites_recipe_id_a227939c_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_favourites recipes_favourites_user_id_b1bf2bb1_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_favourites
+    ADD CONSTRAINT recipes_favourites_user_id_b1bf2bb1_fk_users_usercustomized_id FOREIGN KEY (user_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_ingredientinrecipe recipes_ingredientin_ingredient_id_1024154f_fk_recipes_i; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredientinrecipe
+    ADD CONSTRAINT recipes_ingredientin_ingredient_id_1024154f_fk_recipes_i FOREIGN KEY (ingredient_id) REFERENCES public.recipes_ingredients(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_ingredientinrecipe recipes_ingredientin_recipe_id_6c13856c_fk_recipes_r; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_ingredientinrecipe
+    ADD CONSTRAINT recipes_ingredientin_recipe_id_6c13856c_fk_recipes_r FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe recipes_recipe_author_id_7274f74b_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe
+    ADD CONSTRAINT recipes_recipe_author_id_7274f74b_fk_users_usercustomized_id FOREIGN KEY (author_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_recipe_id_e15a4132_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_recipe_id_e15a4132_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_recipe_tags recipes_recipe_tags_tag_id_6fe328c4_fk_recipes_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_recipe_tags
+    ADD CONSTRAINT recipes_recipe_tags_tag_id_6fe328c4_fk_recipes_tag_id FOREIGN KEY (tag_id) REFERENCES public.recipes_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_shoplist recipes_shoplist_recipe_id_12018b65_fk_recipes_recipe_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_shoplist
+    ADD CONSTRAINT recipes_shoplist_recipe_id_12018b65_fk_recipes_recipe_id FOREIGN KEY (recipe_id) REFERENCES public.recipes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: recipes_shoplist recipes_shoplist_user_id_f3efdb55_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.recipes_shoplist
+    ADD CONSTRAINT recipes_shoplist_user_id_f3efdb55_fk_users_usercustomized_id FOREIGN KEY (user_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_follow users_follow_author_id_c48003a4_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_author_id_c48003a4_fk_users_usercustomized_id FOREIGN KEY (author_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_follow users_follow_user_id_e66dc3cf_fk_users_usercustomized_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_follow
+    ADD CONSTRAINT users_follow_user_id_e66dc3cf_fk_users_usercustomized_id FOREIGN KEY (user_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_usercustomized_groups users_usercustomized_groups_group_id_530ebb66_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_groups
+    ADD CONSTRAINT users_usercustomized_groups_group_id_530ebb66_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_usercustomized_user_permissions users_usercustomized_permission_id_88b8f810_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_user_permissions
+    ADD CONSTRAINT users_usercustomized_permission_id_88b8f810_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_usercustomized_groups users_usercustomized_usercustomized_id_0bdc40cf_fk_users_use; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_groups
+    ADD CONSTRAINT users_usercustomized_usercustomized_id_0bdc40cf_fk_users_use FOREIGN KEY (usercustomized_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_usercustomized_user_permissions users_usercustomized_usercustomized_id_3093cee8_fk_users_use; Type: FK CONSTRAINT; Schema: public; Owner: foodgram_user
+--
+
+ALTER TABLE ONLY public.users_usercustomized_user_permissions
+    ADD CONSTRAINT users_usercustomized_usercustomized_id_3093cee8_fk_users_use FOREIGN KEY (usercustomized_id) REFERENCES public.users_usercustomized(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

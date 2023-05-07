@@ -140,3 +140,7 @@ __backend/
 
 # vscode
 backend/.vscode/
+
+# node_modules
+frontend/node_modules/
+infra/node_modules/
