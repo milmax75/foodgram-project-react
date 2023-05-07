@@ -2,7 +2,7 @@ from django.core.files.base import ContentFile
 from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 from users.models import UserCustomized, Follow
-from djoser.serializers import UserSerializer, UserCreateSerializer
+from djoser.serializers import UserCreateSerializer  # UserSerializer
 from django.db.models import F
 from recipes.models import (
     Ingredients,

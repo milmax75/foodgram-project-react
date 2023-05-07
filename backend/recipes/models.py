@@ -118,8 +118,8 @@ class Recipe(models.Model):
 
 class IngredientInRecipe(models.Model):
     amount = models.IntegerField(verbose_name='количество', validators=(
-            MinValueValidator(1, 'Add at least 1 ingredient'),
-        ))
+        MinValueValidator(1, 'Add at least 1 ingredient'),
+    ))
     ingredient = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
