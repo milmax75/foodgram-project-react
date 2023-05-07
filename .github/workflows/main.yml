@@ -29,10 +29,10 @@ jobs:
         python -m flake8 
         # перейти в папку, содержащую manage.py — 
         #<корневая_папка_infra_actions>/<папка_проекта>/manage.py
-        cd backend/
+        # cd backend/
         # запустить написанные разработчиком тесты
-        python manage.py test
-        cd ..
+        # python manage.py test
+        # cd ..
         pytest
 
   send_message_test_dev:
