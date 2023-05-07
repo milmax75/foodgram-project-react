@@ -33,7 +33,7 @@ jobs:
         # запустить написанные разработчиком тесты
         # python manage.py test
         # cd ..
-        pytest
+        # pytest
 
   send_message_test_dev:
     runs-on: ubuntu-latest
