@@ -1,4 +1,4 @@
-from api_yamdb import settings
+from foodgram import settings
 
 
 class TestSettings:
