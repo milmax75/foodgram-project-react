@@ -144,3 +144,7 @@ backend/.vscode/
 # node_modules
 frontend/node_modules/
 infra/node_modules/
+
+#initial infra files
+_initial_docker-compose.yml
+_initial_nginx.conf

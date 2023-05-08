@@ -8,8 +8,8 @@ services:
       - ./.env 
   backend:
     build:
-      context: ../backend
-      dockerfile: Dockerfile
+      image: milmax/foodgram_back:v.1
+      restart: always 
     volumes: 
       - static_value:/app/static/ 
       - media_value:/app/media/
@@ -19,8 +19,8 @@ services:
       - db
   frontend:
     build:
-      context: ../frontend
-      dockerfile: Dockerfile
+      image: milmax/foodgram_front:v.1
+      restart: always 
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
