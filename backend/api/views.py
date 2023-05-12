@@ -85,7 +85,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             data=data, context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
-        if request.method == "POST":
+        if request.method == 'POST':
             return self.add_object(ShopList, request.user, pk)
         return self.delete_object(ShopList, request.user, pk)
 
